@@ -93,19 +93,20 @@
 ### share 分享
 
 >##### js调用
->
-	window.hostsdk.share(
-		'标题',
-		'http://www.baidu.com',
-		'描述','http://m.ireadercity.com/webapp/img/logo.png',
-		0,
-		'qzone,wechat',
-		function(){
-			alert("分享成功");
-		},
-		function(platform){
-			alert("分享成功！分享的平台为："+platform);
-		});
+>```javascript
+window.hostsdk.share(
+	'标题',
+	'http://www.baidu.com',
+	'描述','http://m.ireadercity.com/webapp/img/logo.png',
+	0,
+	'qzone,wechat',
+	function(){
+		alert("分享成功");
+	},
+	function(platform){
+		alert("分享成功！分享的平台为："+platform);
+	});
+```
 
 > 参数：
 > 
@@ -204,14 +205,15 @@
 
 >##### js调用
 
->```javascript
-	window.hostsdk.recharge(
-		function(){
-			alert("取消充值");
-		},
-		function(money){
-			alert("充值成功，充值金额："+money);
-		}););
+>
+> ```javascript
+window.hostsdk.recharge(
+	function(){
+		alert("取消充值");
+	},
+	function(money){
+		alert("充值成功，充值金额："+money);
+	}););
 ```
 
 > 参数：
