@@ -93,7 +93,7 @@
 ### share 分享
 
 >##### js调用
->```javascript
+```javascript
 window.hostsdk.share(
 	'标题',
 	'http://www.baidu.com',
@@ -124,8 +124,9 @@ window.hostsdk.share(
 ### openBook 打开并阅读一本书
 
 >##### js调用
->
-	window.hostsdk.openBook('e809304b4c434b9fbe00a75eb2f7e31c');
+```javascript
+window.hostsdk.openBook('e809304b4c434b9fbe00a75eb2f7e31c');
+```
 
 > 参数：
 > 
@@ -136,8 +137,9 @@ window.hostsdk.share(
 ### openBookList 打开一个书单
 
 >##### js调用
->
+```
 	window.hostsdk.openBookList('e809304b4c434b9fbe00a75eb2f7e31c');
+```
 
 > 参数：
 > 
@@ -148,8 +150,9 @@ window.hostsdk.share(
 ### searchBook 直接搜索书籍，显示搜索结果
 
 >##### js调用
->
+```
 	window.hostsdk.searchBook('总裁');
+```
 
 > 参数：
 > 
@@ -160,8 +163,9 @@ window.hostsdk.share(
 ### showSearch 打开搜索界面
 
 >##### js调用
->
+```
 	window.hostsdk.showSearch('总裁');
+```
 
 > 参数：
 > 
@@ -172,15 +176,15 @@ window.hostsdk.share(
 ### downloadBook 下载指定书籍
 
 >##### js调用
->[javascript]
-	window.hostsdk.downloadBook('e809304b4c434b9fbe00a75eb2f7e31c',
-		function(){
-			alert("下载书籍失败");
-		},
-		function(){
-			alert("下载书籍成功");
-		});
-
+```
+window.hostsdk.downloadBook('e809304b4c434b9fbe00a75eb2f7e31c',
+	function(){
+		alert("下载书籍失败");
+	},
+	function(){
+		alert("下载书籍成功");
+	});
+```
 > 参数：
 > 
 |参数名|类型|备注|
@@ -192,8 +196,9 @@ window.hostsdk.share(
 ### showBookDetail 显示书籍详情
 
 >##### js调用
->
-	window.hostsdk.showBookDetail('e809304b4c434b9fbe00a75eb2f7e31c');
+```
+window.hostsdk.showBookDetail('e809304b4c434b9fbe00a75eb2f7e31c');
+```
 
 > 参数：
 > 
@@ -204,9 +209,7 @@ window.hostsdk.share(
 ### recharge 打开充值界面
 
 >##### js调用
-
->
-> ```javascript
+```javascript
 window.hostsdk.recharge(
 	function(){
 		alert("取消充值");
