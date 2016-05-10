@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="share()">分享</button>
+    <script>
+        window.hostsdk.onInit = function(){
+            alert("初始化");
+        }
+        
+        window.hostsdk.onPause = function(){
+            alert("暂停执行");
+        }
+        
+        window.hostsdk.onResume = function(){
+            alert("恢复执行");
+        }
+        
+        window.hostsdk.onStop = function(){
+            alert("结束执行");
+        }
+        
+        function share(){
+            window.hostsdk.share("标题","http://www.baidu.com", "描述内容", "http://m.ireadercity.com/webapp/img/logo.png", 2, "qzone", function(){
+                alert("取消了分享");
+            },function(platform){
+                alert("分享的平台是："+platform);
+            });
+        }
+    </script>
+</body>
+
+</html>
