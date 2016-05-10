@@ -1,5 +1,40 @@
 # ![logo](http://m.ireadercity.com/webapp/img/logo.png) 书香云集js与客户端交互文档
 
+## 设计概要
+#### 设计目的
+> 为了能够使JS与 **书香云集** 客户的交互更加顺利，重新设计了交互机制。
+> 之前交互机制的不足之处：
+> * 采用自定义的schema方式只能由js调起客户的的相应功能。
+> * window.location = "xxx://xxx" 这种形式容易阻断部分js功能的执行。
+> * 缺少操作的回调机制。比如何时分享成功和分享失败。
+> 
+> 新的交互机制加入了回调的支持，加入了生命周期概念，目的在于可以对整个交互过程进行操作把控。
+
+#### URL约定
+> 新的交互机制约定了一套URL规则，用于控制页面加载的方式，例如，是否需要全屏加载，是否允许关闭等。具体形式如：
+> `http://www.sxyj.net/book_read/bookid_e809304b4c434b9fbe00a75eb2f7e31c.html?hostsdk=fullscreen,uncloseable`
+>
+>| 参数名 | 默认生效 | 备注 |
+| --- | --- | --- |
+| fullscreen | 否 | 全屏加载页面。没有标题栏，没有底部工具条 |
+| uncloseable | 否 | 不允许关闭页面（由页面控制关闭） |
+| unshareable | 否 | 是否显示分享 |
+| openpush | 否 | push 方式打开窗口（ios） |
+| openpresent | 否 | present 方式打开窗口（ios） |
+
+#### 链接处理
+> 客户的应该支持使用target指定的打开方式，如果 `target` 为 `_blank` 则在新窗口打开页面。否则在当前窗口加载新页面
+```html
+<a href="http://www.baidu.com" target="_blank">链接</a>
+```
+
+> 等价于通过 `window.hostsdk.openPage("http://www.baidu.com")` 打开页面
+
+#### 安全机制
+> 为了保证客户的的安全，防止打开第三方不可信任的地址。造成恶意读取用户信息的安全隐患。设计了安全机制。
+> 在适当的时候，客户端向服务端请求一个可信任网址列表（客户的自行考虑）。也可以在访问页面之前，向服务端特定的接口验证是否是可信任地址。如果是，则将 `userId` 等敏感参数通过 `onInit` 传递给网页。
+> 可信任地址允许使用简单通配符 `*` 例如 `*.ireadercity.com*`
+
 ## 结构图
 
 ![image](./hostsdk结构图.jpg)
@@ -47,6 +82,7 @@
 |showBookDetail|显示书籍详情|
 |recharge|打开充值界面|
 |login|打开登录界面|
+|openPage|新窗口打开页面|
 
 ### share 分享
 
@@ -63,7 +99,8 @@ window.hostsdk.share(
 	},
 	function(platform){
 		alert("分享成功！分享的平台为："+platform);
-	});
+	}
+);
 ```
 
 > 参数：
@@ -135,13 +172,15 @@ window.hostsdk.showSearch('总裁');
 
 >##### js调用
 ```javascript
-window.hostsdk.downloadBook('e809304b4c434b9fbe00a75eb2f7e31c',
+window.hostsdk.downloadBook(
+	'e809304b4c434b9fbe00a75eb2f7e31c',
 	function(){
 		alert("下载书籍失败");
 	},
 	function(){
 		alert("下载书籍成功");
-	});
+	}
+);
 ```
 > 参数：
 > 
@@ -174,7 +213,8 @@ window.hostsdk.recharge(
 	},
 	function(money){
 		alert("充值成功，充值金额："+money);
-	}););
+	}
+);
 ```
 
 > 参数：
@@ -195,7 +235,8 @@ window.hostsdk.login(
 	},
 	function( userId ){
 		alert("登录成功，用户ID：" + userId);
-	}););
+	}
+);
 ```
 
 > 参数：
@@ -204,3 +245,16 @@ window.hostsdk.login(
 |---	|---|---|
 | cancelCallback | Function | 取消登录时的回调 |
 | successCallback | Function | 登录成功之后的回调 并携带 userId 参数，表示用户的id |
+
+### openPage 新窗口打开页面
+
+>##### js调用
+```javascript
+window.hostsdk.openPage("http://www.baidu.com/");
+```
+
+> 参数：
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| url | String | url链接 |
