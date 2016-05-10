@@ -10,6 +10,8 @@
 > 
 > 新的交互机制加入了回调的支持，加入了生命周期概念，目的在于可以对整个交互过程进行操作把控。
 
+> Android 4.2 以下的系统有严重安全隐患。可以使用 [Safe Java-JS WebView Bridge](https://github.com/pedant/safe-java-js-webview-bridge)
+
 #### URL约定
 > 新的交互机制约定了一套URL规则，用于控制页面加载的方式，例如，是否需要全屏加载，是否允许关闭等。具体形式如：
 > `http://www.sxyj.net/book_read/bookid_e809304b4c434b9fbe00a75eb2f7e31c.html?hostsdk=fullscreen,uncloseable`
@@ -83,6 +85,7 @@
 |recharge|打开充值界面|
 |login|打开登录界面|
 |openPage|新窗口打开页面|
+|exit|关闭当前页面|
 
 ### share 分享
 
@@ -258,3 +261,10 @@ window.hostsdk.openPage("http://www.baidu.com/");
 |参数名|类型|备注|
 |---	|---|---|
 | url | String | url链接 |
+
+### exit 关闭当前页面
+
+>##### js调用
+```javascript
+window.hostsdk.exit();
+```
