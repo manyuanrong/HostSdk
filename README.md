@@ -2,9 +2,9 @@
 
 ## 设计概要
 #### 设计目的
-> 为了能够使JS与 **书香云集** 客户的交互更加顺利，重新设计了交互机制。
+> 为了能够使JS与 **书香云集** 客户端的交互更加顺利，重新设计了交互机制。
 > 之前交互机制的不足之处：
-> * 采用自定义的schema方式只能由js调起客户的的相应功能。
+> * 采用自定义的schema方式只能由js调起客户端的相应功能。
 > * window.location = "xxx://xxx" 这种形式容易阻断部分js功能的执行。
 > * 缺少操作的回调机制。比如何时分享成功和分享失败。
 > 
@@ -25,7 +25,7 @@
 | openpresent | 否 | present 方式打开窗口（ios） |
 
 #### 链接处理
-> 客户的应该支持使用target指定的打开方式，如果 `target` 为 `_blank` 则在新窗口打开页面。否则在当前窗口加载新页面
+> 客户端应该支持使用target指定的打开方式，如果 `target` 为 `_blank` 则在新窗口打开页面。否则在当前窗口加载新页面
 ```html
 <a href="http://www.baidu.com" target="_blank">链接</a>
 ```
@@ -33,8 +33,8 @@
 > 等价于通过 `window.hostsdk.openPage("http://www.baidu.com")` 打开页面
 
 #### 安全机制
-> 为了保证客户的的安全，防止打开第三方不可信任的地址。造成恶意读取用户信息的安全隐患。设计了安全机制。
-> 在适当的时候，客户端向服务端请求一个可信任网址列表（客户的自行考虑）。也可以在访问页面之前，向服务端特定的接口验证是否是可信任地址。如果是，则将 `userId` 等敏感参数通过 `onInit` 传递给网页。
+> 为了保证客户端的安全，防止打开第三方不可信任的地址。造成恶意读取用户信息的安全隐患。设计了安全机制。
+> 在适当的时候，客户端向服务端请求一个可信任网址列表（客户端自行考虑）。也可以在访问页面之前，向服务端特定的接口验证是否是可信任地址。如果是，则将 `userId` 等敏感参数通过 `onInit` 传递给网页。
 > 可信任地址允许使用简单通配符 `*` 例如 `*.ireadercity.com*`
 
 ## 结构图
@@ -79,7 +79,6 @@
 |openBook|打开并阅读一本书|
 |openBookList|打开指定的书单|
 |searchBook|直接搜索书籍，显示搜索结果|
-|showSearch|打开搜索界面|
 |downloadBook|下载指定的书籍|
 |showBookDetail|显示书籍详情|
 |recharge|打开充值界面|
@@ -94,14 +93,15 @@
 window.hostsdk.share(
 	'标题',
 	'http://www.baidu.com',
-	'描述','http://m.ireadercity.com/webapp/img/logo.png',
+	'描述',
+	'http://m.ireadercity.com/webapp/img/logo.png',
 	0,
 	'qzone,wechat',
 	function(){
 		alert("取消分享");
 	},
 	function(platform){
-		alert("分享成功！分享的平台为："+platform);
+		alert("分享成功！分享的平台为：" + platform);
 	}
 );
 ```
@@ -145,24 +145,11 @@ window.hostsdk.openBookList('e809304b4c434b9fbe00a75eb2f7e31c');
 |---	|---|---|
 | bookListId | String | 书单的Id |
 
-### searchBook 直接搜索书籍，显示搜索结果
+### searchBook 搜索书籍，显示搜索结果
 
 >##### js调用
 ```javascript
 window.hostsdk.searchBook('总裁');
-```
-
-> 参数：
-> 
-|参数名|类型|备注|
-|---	|---|---|
-| keyword | String | 搜索关键字 |
-
-### showSearch 打开搜索界面
-
->##### js调用
-```javascript
-window.hostsdk.showSearch('总裁');
 ```
 
 > 参数：
