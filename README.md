@@ -135,7 +135,7 @@ window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07','ab2cafb54ddb462a9cf5
 
 >##### js调用
 ```javascript
-window.hostsdk.openBookList('e809304b4c434b9fbe00a75eb2f7e31c');
+window.hostsdk.openBookList('d8d6aa3baadf4c5789735119b026e69f');
 ```
 
 > 参数：
