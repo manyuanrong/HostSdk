@@ -45,29 +45,13 @@
 >生命周期事件回调是App客户端主动调用，用于告知/通知 js,以便于js可以在适当时候做特殊处理。
 
 ##### onInit(初始化)
-`window.hostsdk.onInit(version,userId,idfa)`
-
-*参数：*
-
-|参数名|类型|备注|
-|---|---|---|
-|version|String|App版本|
-|userId|String|用户ID、临时用户为deviceId|
-|idfa|String||
-
+`window.hostsdk.onInit()`
 ##### onPause(暂停执行)
 `window.hostsdk.onPause()`
 ##### onResume(恢复执行)
 `window.hostsdk.onResume()`
 ##### onStop(结束执行)
 `window.hostsdk.onStop()`
-
-*返回值：*
-
-|取值|备注|
-|---|---|
-|0|关闭|
-|1|阻止关闭|
 
 ## 接口方法
 
@@ -76,6 +60,7 @@
 |方法名|备注|
 |---|---|
 |share|分享|
+|getInfo|获取环境信息（userId，deviceId，idfa，version，channel...）|
 |openBook|打开并阅读一本书|
 |openBookList|打开指定的书单|
 |searchBook|直接搜索书籍，显示搜索结果|
@@ -85,6 +70,7 @@
 |login|打开登录界面|
 |openPage|新窗口打开页面|
 |exit|关闭当前页面|
+|setCloseable|设置是否可以关闭窗口（可以让js决定何时关闭窗口）|
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
@@ -105,17 +91,22 @@ window.hostsdk.share(
 );
 ```
 
+### getInfo 获取环境信息
+> 获取环境信息（userId，deviceId，idfa，version，channel...）
+>##### js调用
+```javascript
+window.hostsdk.getInfo(
+	function(info){
+		alert("json类型的数据" + info);
+	}
+);
+```
+
 > 参数：
 > 
 |参数名|类型|备注|
 |---	|---|---|
-| title	| String | 要分享的标题 |
-| url | String | 要分享的链接地址	|
-| description | String | 要分享的文本描述内容 |
-| icon | String | 分享的图片 |
-| platforms | String | 可以分享平台多个用逗号分割：qzone,qq,wechat,wechatcircle,weibo |
-| cancelCallback | Function | 取消分享时的回调 |
-| successCallback | Function | 分享成功之后的回调 并携带 platform 参数，表示用户选择的平台 |
+| callback	| Function | 获取成功的回调（包含一个json字符串数据，描述了userId，deviceId等信息） |
 
 ### openBook 打开并阅读一本书
 
@@ -257,4 +248,15 @@ window.hostsdk.openPage("http://www.baidu.com/");
 >##### js调用
 ```javascript
 window.hostsdk.exit();
+```
+
+### setCloseable 设置是否可以关闭窗口
+
+>##### js调用（允许关闭）
+```javascript
+window.hostsdk.setCloseable(true);
+```
+>##### js调用（不允许关闭）
+```javascript
+window.hostsdk.setCloseable(false);
 ```
