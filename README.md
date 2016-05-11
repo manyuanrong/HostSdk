@@ -115,7 +115,7 @@ window.hostsdk.share(
 | description | String | 要分享的文本描述内容 |
 | icon | String | 分享的图片 |
 | type | int | 分享的类型	：1、文本 2、图片 |
-| platforms | String | 可以分享平台多个用逗号分割：qzone,qq,wechat,weibo |
+| platforms | String | 可以分享平台多个用逗号分割：qzone,qq,wechat,wechatcircle,weibo |
 | cancelCallback | Function | 取消分享时的回调 |
 | successCallback | Function | 分享成功之后的回调 并携带 platform 参数，表示用户选择的平台 |
 
