@@ -1,38 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="baidu-site-verification" content="QiS4WOEsZF" />
+		<meta http-equiv="X-UA-Compatible" content="edge" />
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+		<meta http-equiv="expires" content="-1">
+		<meta name="format-detection" content="telephone=no">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<title>测试接口</title>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
+	<body>
+		<button onclick="share()">分享</button><br />
+		<button onclick="openBook()">打开并阅读一本书</button><br />
+		<button onclick="openBookList()">打开一个书单</button><br />
+		<button onclick="searchBook()">搜索书籍，显示搜索结果</button><br />
+		<button onclick="downloadBook()">下载指定书籍</button><br />
+		<button onclick="showBookDetail()">显示书籍详情</button><br />
+		<button onclick="recharge()">打开充值界面</button><br />
+		<button onclick="login()">打开登录界面</button><br />
+		<button onclick="openPage()">新窗口打开页面</button><br />
+		<button onclick="exit()">关闭当前页面</button>
 
-<body>
-    <button onclick="share()">分享</button>
-    <script>
-        window.hostsdk.onInit = function(){
-            alert("初始化");
-        }
-        
-        window.hostsdk.onPause = function(){
-            alert("暂停执行");
-        }
-        
-        window.hostsdk.onResume = function(){
-            alert("恢复执行");
-        }
-        
-        window.hostsdk.onStop = function(){
-            alert("结束执行");
-        }
-        
-        function share(){
-            window.hostsdk.share("标题","http://www.baidu.com", "描述内容", "http://m.ireadercity.com/webapp/img/logo.png", 2, "qzone", function(){
-                alert("取消了分享");
-            },function(platform){
-                alert("分享的平台是："+platform);
-            });
-        }
-    </script>
-</body>
+		<script>
+			window.hostsdk.onInit = function() {
+				alert("初始化");
+			}
+			window.hostsdk.onPause = function() {
+				alert("暂停执行");
+			}
+			window.hostsdk.onResume = function() {
+				alert("恢复执行");
+			}
+			window.hostsdk.onStop = function() {
+				alert("结束执行");
+			}
 
+			function share() {
+				window.hostsdk.share("标题", "http://www.baidu.com", "描述内容", "http://m.ireadercity.com/webapp/img/logo.png", 2, "qzone", function() {
+					alert("取消了分享");
+				}, function(platform) {
+					alert("分享的平台是：" + platform);
+				});
+			}
+
+			function openBook() {
+				window.hostsdk.openBook('e809304b4c434b9fbe00a75eb2f7e31c');
+			}
+
+			function openBookList() {
+				window.hostsdk.openBookList('e809304b4c434b9fbe00a75eb2f7e31c');
+			}
+
+			function searchBook() {
+				window.hostsdk.searchBook('总裁');
+			}
+
+			function downloadBook() {
+				window.hostsdk.downloadBook(
+					'e809304b4c434b9fbe00a75eb2f7e31c',
+					function() {
+						alert("下载书籍失败");
+					},
+					function() {
+						alert("下载书籍成功");
+					}
+				);
+			}
+
+			function showBookDetail() {
+				window.hostsdk.showBookDetail('e809304b4c434b9fbe00a75eb2f7e31c');
+			}
+
+			function recharge() {
+				window.hostsdk.recharge(
+					function() {
+						alert("取消充值");
+					},
+					function(money) {
+						alert("充值成功，充值金额：" + money);
+					}
+				);
+			}
+
+			function login() {
+				window.hostsdk.login(
+					function() {
+						alert("取消登录");
+					},
+					function(userId) {
+						alert("登录成功，用户ID：" + userId);
+					}
+				);
+			}
+
+			function openPage() {
+				window.hostsdk.openPage("http://www.baidu.com/");
+			}
+
+			function exit() {
+				window.hostsdk.exit();
+			}
+		</script>
+	</body>
 </html>
