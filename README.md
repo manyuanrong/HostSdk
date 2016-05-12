@@ -45,29 +45,13 @@
 >生命周期事件回调是App客户端主动调用，用于告知/通知 js,以便于js可以在适当时候做特殊处理。
 
 ##### onInit(初始化)
-`window.hostsdk.onInit(version,userId,idfa)`
-
-*参数：*
-
-|参数名|类型|备注|
-|---|---|---|
-|version|String|App版本|
-|userId|String|用户ID、临时用户为deviceId|
-|idfa|String||
-
+`window.hostsdk.onInit()`
 ##### onPause(暂停执行)
 `window.hostsdk.onPause()`
 ##### onResume(恢复执行)
 `window.hostsdk.onResume()`
 ##### onStop(结束执行)
 `window.hostsdk.onStop()`
-
-*返回值：*
-
-|取值|备注|
-|---|---|
-|0|关闭|
-|1|阻止关闭|
 
 ## 接口方法
 
@@ -76,6 +60,7 @@
 |方法名|备注|
 |---|---|
 |share|分享|
+|getInfo|获取环境信息（userId，deviceId，idfa，version，channel...）|
 |openBook|打开并阅读一本书|
 |openBookList|打开指定的书单|
 |searchBook|直接搜索书籍，显示搜索结果|
@@ -85,9 +70,10 @@
 |login|打开登录界面|
 |openPage|新窗口打开页面|
 |exit|关闭当前页面|
+|setCloseable|设置是否可以关闭窗口（可以让js决定何时关闭窗口）|
 
 ### share 分享
-
+> 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
 >##### js调用
 ```javascript
 window.hostsdk.share(
@@ -95,7 +81,6 @@ window.hostsdk.share(
 	'http://www.baidu.com',
 	'描述',
 	'http://m.ireadercity.com/webapp/img/logo.png',
-	0,
 	'qzone,wechat',
 	function(){
 		alert("取消分享");
@@ -106,24 +91,28 @@ window.hostsdk.share(
 );
 ```
 
+### getInfo 获取环境信息
+> 获取环境信息（userId，deviceId，idfa，version，channel...）
+>##### js调用
+```javascript
+window.hostsdk.getInfo(
+	function(info){
+		alert("json类型的数据" + info);
+	}
+);
+```
+
 > 参数：
 > 
 |参数名|类型|备注|
 |---	|---|---|
-| title	| String | 要分享的标题 |
-| url | String | 要分享的链接地址	|
-| description | String | 要分享的文本描述内容 |
-| icon | String | 分享的图片 |
-| type | int | 分享的类型	：1、文本 2、图片 |
-| platforms | String | 可以分享平台多个用逗号分割：qzone,qq,wechat,weibo |
-| cancelCallback | Function | 取消分享时的回调 |
-| successCallback | Function | 分享成功之后的回调 并携带 platform 参数，表示用户选择的平台 |
+| callback	| Function | 获取成功的回调（包含一个json字符串数据，描述了userId，deviceId等信息） |
 
 ### openBook 打开并阅读一本书
 
 >##### js调用
 ```javascript
-window.hostsdk.openBook('e809304b4c434b9fbe00a75eb2f7e31c');
+window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07','ab2cafb54ddb462a9cf50e47815feaab');
 ```
 
 > 参数：
@@ -131,12 +120,13 @@ window.hostsdk.openBook('e809304b4c434b9fbe00a75eb2f7e31c');
 |参数名|类型|备注|
 |---	|---|---|
 | bookId | String | 书籍的Id |
+| chapterId | String | 章节Id （可选） |
 
 ### openBookList 打开一个书单
 
 >##### js调用
 ```javascript
-window.hostsdk.openBookList('e809304b4c434b9fbe00a75eb2f7e31c');
+window.hostsdk.openBookList('d8d6aa3baadf4c5789735119b026e69f');
 ```
 
 > 参数：
@@ -158,17 +148,17 @@ window.hostsdk.searchBook('总裁');
 |---	|---|---|
 | keyword | String | 搜索关键字 |
 
-### downloadBook 下载指定书籍
+### downloadBook 下载指定书籍(可以多本)
 
 >##### js调用
 ```javascript
 window.hostsdk.downloadBook(
-	'e809304b4c434b9fbe00a75eb2f7e31c',
-	function(){
-		alert("下载书籍失败");
+	'e809304b4c434b9fbe00a75eb2f7e31c,e809304b4c434b9fbe00a75eb2f7e31c',
+	function(bookId){
+		alert("下载书籍失败" + bookId);
 	},
-	function(){
-		alert("下载书籍成功");
+	function(bookId){
+		alert("下载书籍成功" + bookId);
 	}
 );
 ```
@@ -194,15 +184,20 @@ window.hostsdk.showBookDetail('e809304b4c434b9fbe00a75eb2f7e31c');
 | bookId | String | 书籍的Id |
 
 ### recharge 打开充值界面
+> 用户调用充值过程中可能会
 
 >##### js调用
 ```javascript
 window.hostsdk.recharge(
-	function(){
-		alert("取消充值");
+	function(orderId){
+		if(orderId!=""){
+			alert("用户取消充值：取消的订单为：" + orderId);
+		} else {
+			alert("用户放弃充值");
+		}		
 	},
-	function(money){
-		alert("充值成功，充值金额："+money);
+	function(orderId){
+		alert("充值成功，充值订单号：" + orderId);
 	}
 );
 ```
@@ -211,9 +206,8 @@ window.hostsdk.recharge(
 > 
 |参数名|类型|备注|
 |---	|---|---|
-| bookId | String | 书籍的Id |
-| cancelCallback | Function | 取消分享时的回调 |
-| successCallback | Function | 分享成功之后的回调 并携带 money 参数，表示用户充值成功的金额 |
+| cancelCallback | Function | 取消充值回调（如果用户充值过程中创建了订单，但是取消了支付，可以携带`orderId`参数。如果没有创建订单，则传递`""`） |
+| successCallback | Function | 充值成功之后的回调 并携带 orderId 参数，表示用户充值的订单号 |
 
 ### login 打开登录界面
 
@@ -254,4 +248,15 @@ window.hostsdk.openPage("http://www.baidu.com/");
 >##### js调用
 ```javascript
 window.hostsdk.exit();
+```
+
+### setCloseable 设置是否可以关闭窗口
+
+>##### js调用（允许关闭）
+```javascript
+window.hostsdk.setCloseable(true);
+```
+>##### js调用（不允许关闭）
+```javascript
+window.hostsdk.setCloseable(false);
 ```

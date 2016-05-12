@@ -3,24 +3,24 @@
  */
 class HostSdk {
 
-    // HostSdk生命周期事件回调
-    public event = {
-        // 当宿主APP加载网页完成时调用
-        onInit: function () {
+    // 当宿主APP加载网页完成时调用
+    public onInit(version: string, userId: string, idfa: string) {
 
-        },
-        // 当宿主APP的WebView变得不可操作时调用。例如：在Android中Activity被遮挡或者APP退回到桌面时
-        onPause: function () {
+    }
 
-        },
-        // 当宿主APP重新回到可以操作状态调用
-        onResume: function () {
+    // 当宿主APP的WebView变得不可操作时调用。例如：在Android中Activity被遮挡或者APP退回到桌面时
+    public onPause() {
 
-        },
-        // 当WebView被销毁时调用
-        onStop: function () {
+    }
 
-        }
+    // 当宿主APP重新回到可以操作状态调用
+    public onResume() {
+
+    }
+
+    // 当WebView被销毁时调用
+    public onStop() {
+
     }
 
     // 调用客户端分享功能
@@ -64,48 +64,41 @@ class HostSdk {
         keyword: string) {
 
     }
-    
-    // 打开搜索界面
-    public showSearch(
-        // 搜索关键字
-        keyword:string){
-        
-    }
-    
+
     // 下载指定书籍
     public downloadBook(
         // 书籍Id
-        bookId:string,
+        bookId: string,
         // 下载错误的回调（msg:string）
-        errorCallback:Function,
+        errorCallback: Function,
         // 下载成功的回调（msg:string）
-        successCallback:Function){
-        
+        successCallback: Function) {
+
     }
-    
+
     // 显示书籍详情
     public showBookDetail(
         // 书籍Id
-        bookId:string){
-        
+        bookId: string) {
+
     }
-    
+
     // 打开充值界面
     public recharge(
         // 取消充值的回调
-        cancelCallback:Function,
+        cancelCallback: Function,
         // 充值成功的回调(money:number, coin:number)
-        successCallback:Function){
-        
+        successCallback: Function) {
+
     }
-    
+
     // 用户登录
     public login(
         // 取消登录的回调
-        cancelCallback:Function,
+        cancelCallback: Function,
         // 登录成功的回调(userId:string)
-        successCallback:Function){
-        
+        successCallback: Function) {
+
     }
 
 }
