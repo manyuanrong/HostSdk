@@ -112,7 +112,7 @@ window.hostsdk.getInfo(
 
 >##### js调用
 ```javascript
-window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07','ab2cafb54ddb462a9cf50e47815feaab');
+window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07');
 ```
 
 > 参数：
@@ -120,7 +120,6 @@ window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07','ab2cafb54ddb462a9cf5
 |参数名|类型|备注|
 |---	|---|---|
 | bookId | String | 书籍的Id |
-| chapterId | String | 章节Id （可选） |
 
 ### openBookList 打开一个书单
 
