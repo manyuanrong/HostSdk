@@ -39,6 +39,8 @@
 					alert("初始化");
 					window.hostsdk.getInfo(function(json){
 						alert(json);
+					},function(msg){
+						alert(msg);
 					});
 				},
 				onPause : function() {
@@ -64,20 +66,35 @@
 					},
 					function(platform){
 						alert("分享成功！分享的平台为：" + platform);
+					},
+					function(msg){
+						alert(msg);
 					}
 				);
 			}
 
 			function openBook() {
-				window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07','ab2cafb54ddb462a9cf50e47815feaab');
+				window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07',function(msg){
+					alert(msg);
+				});
 			}
 
 			function openBookList() {
-				window.hostsdk.openBookList('e809304b4c434b9fbe00a75eb2f7e31c');
+				window.hostsdk.openBookList(
+					'e809304b4c434b9fbe00a75eb2f7e31c',
+					function(msg){
+						alert(msg);
+					}
+				);
 			}
 
 			function searchBook() {
-				window.hostsdk.searchBook('总裁');
+				window.hostsdk.searchBook(
+					'总裁',
+					function(msg){
+						alert(msg);
+					}
+				);
 			}
 
 			function downloadBook() {
@@ -93,7 +110,12 @@
 			}
 
 			function showBookDetail() {
-				window.hostsdk.showBookDetail('e809304b4c434b9fbe00a75eb2f7e31c');
+				window.hostsdk.showBookDetail(
+					'e809304b4c434b9fbe00a75eb2f7e31c',
+					function(msg){
+						alert(msg);
+					}
+				);
 			}
 
 			function recharge() {

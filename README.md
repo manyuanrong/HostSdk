@@ -30,8 +30,6 @@
 <a href="http://www.baidu.com" target="_blank">链接</a>
 ```
 
-> 等价于通过 `window.hostsdk.openPage("http://www.baidu.com")` 打开页面
-
 #### 安全机制
 > 为了保证客户端的安全，防止打开第三方不可信任的地址。造成恶意读取用户信息的安全隐患。设计了安全机制。
 > 在适当的时候，客户端向服务端请求一个可信任网址列表（客户端自行考虑）。也可以在访问页面之前，向服务端特定的接口验证是否是可信任地址。如果是，则将 `userId` 等敏感参数通过 `onInit` 传递给网页。
@@ -45,13 +43,13 @@
 >生命周期事件回调是App客户端主动调用，用于告知/通知 js,以便于js可以在适当时候做特殊处理。
 
 ##### onInit(初始化)
-`window.hostsdk.onInit()`
+`window.host_sdk.onInit()`
 ##### onPause(暂停执行)
-`window.hostsdk.onPause()`
+`window.host_sdk.onPause()`
 ##### onResume(恢复执行)
-`window.hostsdk.onResume()`
+`window.host_sdk.onResume()`
 ##### onStop(结束执行)
-`window.hostsdk.onStop()`
+`window.host_sdk.onStop()`
 
 ## 接口方法
 
@@ -68,7 +66,6 @@
 |showBookDetail|显示书籍详情|
 |recharge|打开充值界面|
 |login|打开登录界面|
-|openPage|新窗口打开页面|
 |exit|关闭当前页面|
 |setCloseable|设置是否可以关闭窗口（可以让js决定何时关闭窗口）|
 
@@ -87,9 +84,24 @@ window.hostsdk.share(
 	},
 	function(platform){
 		alert("分享成功！分享的平台为：" + platform);
+	},
+	function(msg){
+		alert(msg);
 	}
 );
 ```
+> 参数：
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| title | String | 分享的标题 |
+| url | String |分享的链接 |
+| description | String | 分享描述 |
+| icon | String | 分享的图片 |
+| platforms | String | 要分享的平台，多个用逗号分割:qzone,qq,wechat,wechatcircle,weibo |
+| cancelCallback | Function | 取消分享的回调 |
+| successCallback | Function | 分享成功后的回调 |
+| errorCallback | Function | 发生错误后的回调 |
 
 ### getInfo 获取环境信息
 > 获取环境信息（userId，deviceId，idfa，version，channel...）
@@ -98,6 +110,9 @@ window.hostsdk.share(
 window.hostsdk.getInfo(
 	function(info){
 		alert("json类型的数据" + info);
+	},
+	function(msg){
+		alert(msg);
 	}
 );
 ```
@@ -106,13 +121,16 @@ window.hostsdk.getInfo(
 > 
 |参数名|类型|备注|
 |---	|---|---|
-| callback	| Function | 获取成功的回调（包含一个json字符串数据，描述了userId，deviceId等信息） |
+| successCallback | Function | 获取成功的回调（包含一个json字符串数据，描述了userId，deviceId等信息） |
+| errorCallback	| Function | 发生错误的回调 |
 
 ### openBook 打开并阅读一本书
 
 >##### js调用
 ```javascript
-window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07');
+window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07',function(msg){
+	alert(msg);
+});
 ```
 
 > 参数：
@@ -120,12 +138,15 @@ window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07');
 |参数名|类型|备注|
 |---	|---|---|
 | bookId | String | 书籍的Id |
+| errorCallback | Function | 发生错误的回调 |
 
 ### openBookList 打开一个书单
 
 >##### js调用
 ```javascript
-window.hostsdk.openBookList('d8d6aa3baadf4c5789735119b026e69f');
+window.hostsdk.openBookList('d8d6aa3baadf4c5789735119b026e69f',function(msg){
+	alert(msg);
+});
 ```
 
 > 参数：
@@ -133,12 +154,15 @@ window.hostsdk.openBookList('d8d6aa3baadf4c5789735119b026e69f');
 |参数名|类型|备注|
 |---	|---|---|
 | bookListId | String | 书单的Id |
+| errorCallback | Function | 发生错误的回调 |
 
 ### searchBook 搜索书籍，显示搜索结果
 
 >##### js调用
 ```javascript
-window.hostsdk.searchBook('总裁');
+window.hostsdk.searchBook('总裁'，function(msg){
+	alert(msg);
+});
 ```
 
 > 参数：
@@ -146,6 +170,7 @@ window.hostsdk.searchBook('总裁');
 |参数名|类型|备注|
 |---	|---|---|
 | keyword | String | 搜索关键字 |
+| errorCallback | Function | 发生错误的回调 |
 
 ### downloadBook 下载指定书籍(可以多本)
 
@@ -166,14 +191,16 @@ window.hostsdk.downloadBook(
 |参数名|类型|备注|
 |---	|---|---|
 | bookId | String | 书籍的Id |
-| cancelCallback | Function | 下载失败的回调 |
-| successCallback | Function | 下载成功后的回调 |
+| errorCallback | Function | 下载失败的回调（携带bookId） |
+| successCallback | Function | 下载成功后的回调（携带bookId） |
 
 ### showBookDetail 显示书籍详情
 
 >##### js调用
 ```javascript
-window.hostsdk.showBookDetail('e809304b4c434b9fbe00a75eb2f7e31c');
+window.hostsdk.showBookDetail('e809304b4c434b9fbe00a75eb2f7e31c',function(msg){
+	alert(msg);
+});
 ```
 
 > 参数：
@@ -181,6 +208,7 @@ window.hostsdk.showBookDetail('e809304b4c434b9fbe00a75eb2f7e31c');
 |参数名|类型|备注|
 |---	|---|---|
 | bookId | String | 书籍的Id |
+| errorCallback | Function | 发生错误的回调 |
 
 ### recharge 打开充值界面
 > 用户调用充值过程中可能会
@@ -228,19 +256,6 @@ window.hostsdk.login(
 |---	|---|---|
 | cancelCallback | Function | 取消登录时的回调 |
 | successCallback | Function | 登录成功之后的回调 并携带 userId 参数，表示用户的id |
-
-### openPage 新窗口打开页面
-
->##### js调用
-```javascript
-window.hostsdk.openPage("http://www.baidu.com/");
-```
-
-> 参数：
-> 
-|参数名|类型|备注|
-|---	|---|---|
-| url | String | url链接 |
 
 ### exit 关闭当前页面
 
