@@ -10,6 +10,7 @@
 	<meta http-equiv="expires" content="-1">
 	<meta name="format-detection" content="telephone=no">
 	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+	<script src="HostSdk.js"></script>
 	<title>测试接口</title>
 	<style>
 		button {
@@ -34,28 +35,21 @@
 	<button onclick="exit()">关闭当前页面</button>
 
 	<script>
-		window.host_sdk = {
-				onInit : function() {
-					alert("初始化");
-					window.hostsdk.getInfo(function(json){
-						alert(json);
-					},function(msg){
-						alert(msg);
-					});
-				},
-				onPause : function() {
-					alert("暂停执行");
-				},
-				onResume : function() {
-					alert("恢复执行");
-				},
-				onStop : function() {
-					alert("结束执行");
-				}
-			};
-
+		host_sdk.onInit = function(){
+			alert("onInit");
+		};
+		host_sdk.onPause = function(){
+			alert("onPause");
+		};
+		host_sdk.onResume = function(){
+			alert("onResume");
+		};
+		host_sdk.onStop = function(){
+			alert("onStop");
+		};
+		
 			function share() {
-				window.hostsdk.share(
+				hostsdk.share(
 					'标题',
 					'http://www.baidu.com',
 					'描述',
@@ -99,7 +93,7 @@
 
 			function downloadBook() {
 				window.hostsdk.downloadBook(
-					'e809304b4c434b9fbe00a75eb2f7e31c,e809304b4c434b9fbe00a75eb2f7e31c',
+					'e809304b4c434b9fbe00a75eb2f7e31c,dc1fb11b935543acbf0eea30a9ab2ac0,a2e0a37d0036491a8c3b12bdacb900b3',
 					function(bookId){
 						alert("下载书籍失败" + bookId);
 					},
@@ -145,7 +139,7 @@
 			}
 
 			function openPage() {
-				window.open("http://www.baidu.com", "_blank");
+				window.open("http://m.ireadercity.com/webapp/book/bookshelf.html", "_blank");
 				//window.hostsdk.openPage("http://www.baidu.com/");
 			}
 

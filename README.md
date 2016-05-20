@@ -20,7 +20,7 @@
 | --- | --- | --- |
 | fullscreen | 否 | 全屏加载页面。没有标题栏，没有底部工具条 |
 | uncloseable | 否 | 不允许关闭页面（由页面控制关闭） |
-| unshareable | 否 | 是否显示分享 |
+| unshareable | 否 | 不显示分享 |
 | openpush | 否 | push 方式打开窗口（ios） |
 | openpresent | 否 | present 方式打开窗口（ios） |
 
@@ -35,29 +35,63 @@
 > 在适当的时候，客户端向服务端请求一个可信任网址列表（客户端自行考虑）。也可以在访问页面之前，向服务端特定的接口验证是否是可信任地址。如果是，则将 `userId` 等敏感参数通过 `onInit` 传递给网页。
 > 可信任地址允许使用简单通配符 `*` 例如 `*.ireadercity.com*`
 
-## 结构图
+## 客户端回调
+事件回调是App客户端主动调用，用于告知/通知 js,以便于js可以在适当时候做特殊处理。分为 **生命周期回调** 和 **操作回调**
 
-![image](./hostsdk结构图.jpg)
+#### 生命周期回调 
+生命周期回调由客户端主动发起，是有序的调用，并且一定会调用。自动触发。
 
-## 生命周期
->生命周期事件回调是App客户端主动调用，用于告知/通知 js,以便于js可以在适当时候做特殊处理。
+| 回调方法名信息 | 备注 |
+| --- | --- | --- |
+| window.host_sdk.onInit() | 客户端 **加载网页完成** 时调用 |
+| window.host_sdk.onPause() | 客户端网页 **不可见**、**被遮挡**、**不可操作** 时调用 |
+| window.host_sdk.onResume() | 客户端网页 **恢复可见**、**恢复可操作** 时调用 |
+| window.host_sdk.onStop() | 客户端 **网页销毁** 时调用 |
 
-##### onInit(初始化)
-`window.host_sdk.onInit()`
-##### onPause(暂停执行)
-`window.host_sdk.onPause()`
-##### onResume(恢复执行)
-`window.host_sdk.onResume()`
-##### onStop(结束执行)
-`window.host_sdk.onStop()`
+#### 操作回调
+操作回调由网页发起某些操作时，客户端 **完成操作** 过程后，
 
-## 接口方法
+| 回调方法名信息 | 备注 |
+| --- | --- | --- | --- |
+| host_sdk.errorCallback | 网页发起操作后，客户端 **执行操作过程产生错误** 时调用 |
+| host_sdk.cancelCallback | 网页发起操作后，用户 **放弃操作** 时调用 |
+| host_sdk.successCallback | 网页发起操作后，客户端 **执行操作成功** 时调用 |
 
-###方法一览
+## 网页发起的操作
+由于Android设备和苹果设备的差异，因此网页发起操作的方式也不同。
+>### Android
+`android_hostsdk.操作名(参数...);`
+###### 以分享为例
+```javascript
+android_hostsdk.share(
+	'标题',
+	'http://www.baidu.com',
+	'描述',
+	'http://m.ireadercity.com/webapp/img/logo.png',
+	'qzone,wechat'
+);
+```
 
-|方法名|备注|
-|---|---|
-|share|分享|
+>### IOS
+`ios_hostsdk.callHandler("操作名",参数);`
+###### 以分享为例
+```javascript
+ios_hostsdk.callHandler(
+	"share",
+	{
+		title: "分享测试标题",
+		description: "书香云集，您的掌上图书馆",
+		url: "http://www.ireadercity.com",
+		icon: "http://m.ireadercity.com/webapp/img/logo.png",
+		platforms: "wechat,weibo,wechatcircle"
+	}
+);
+```
+
+#### 操作一览
+| 操作 | 备注 |
+| --- | --- |
+| share | 分享 |
 |getInfo|获取环境信息（userId，deviceId，idfa，version，channel...）|
 |openBook|打开并阅读一本书|
 |openBookList|打开指定的书单|
@@ -68,209 +102,112 @@
 |login|打开登录界面|
 |exit|关闭当前页面|
 |setCloseable|设置是否可以关闭窗口（可以让js决定何时关闭窗口）|
+|getVip|开通vip|
+|openUserCategory|打开用户个人书坊配置|
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
->##### js调用
-```javascript
-window.hostsdk.share(
-	'标题',
-	'http://www.baidu.com',
-	'描述',
-	'http://m.ireadercity.com/webapp/img/logo.png',
-	'qzone,wechat',
-	function(){
-		alert("取消分享");
-	},
-	function(platform){
-		alert("分享成功！分享的平台为：" + platform);
-	},
-	function(msg){
-		alert(msg);
-	}
-);
-```
-> 参数：
-> 
-|参数名|类型|备注|
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
 |---	|---|---|
 | title | String | 分享的标题 |
 | url | String |分享的链接 |
 | description | String | 分享描述 |
 | icon | String | 分享的图片 |
 | platforms | String | 要分享的平台，多个用逗号分割:qzone,qq,wechat,wechatcircle,weibo |
-| cancelCallback | Function | 取消分享的回调 |
-| successCallback | Function | 分享成功后的回调 |
-| errorCallback | Function | 发生错误后的回调 |
+##### 触发的回调
+`host_sdk.errorCallback(msg)`、`host_sdk.successCallback(platform)`、`host_sdk.cancelCallback()`
+> > 分享成功后回调，携带用户选择的平台名
 
 ### getInfo 获取环境信息
-> 获取环境信息（userId，deviceId，idfa，version，channel...）
->##### js调用
-```javascript
-window.hostsdk.getInfo(
-	function(info){
-		alert("json类型的数据" + info);
-	},
-	function(msg){
-		alert(msg);
-	}
-);
-```
-
-> 参数：
-> 
-|参数名|类型|备注|
-|---	|---|---|
-| successCallback | Function | 获取成功的回调（包含一个json字符串数据，描述了userId，deviceId等信息） |
-| errorCallback	| Function | 发生错误的回调 |
+> 获取信息，包括userId，deviceId，idfa，version，channel等等
+>##### 参数选项
+无
+##### 触发的回调
+`host_sdk.errorCallback(msg)`、`host_sdk.successCallback(infoJson)`
+> > 获取成功后回调时，传递包含信息的json字符串
 
 ### openBook 打开并阅读一本书
-
->##### js调用
-```javascript
-window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07',function(msg){
-	alert(msg);
-});
-```
-
-> 参数：
-> 
-|参数名|类型|备注|
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
 |---	|---|---|
-| bookId | String | 书籍的Id |
-| errorCallback | Function | 发生错误的回调 |
+| bookId | String | 书籍Id |
+##### 触发的回调
+`host_sdk.errorCallback(msg)`
 
-### openBookList 打开一个书单
-
->##### js调用
-```javascript
-window.hostsdk.openBookList('d8d6aa3baadf4c5789735119b026e69f',function(msg){
-	alert(msg);
-});
-```
-
-> 参数：
-> 
-|参数名|类型|备注|
+### openBookList 打开指定的书单
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
 |---	|---|---|
-| bookListId | String | 书单的Id |
-| errorCallback | Function | 发生错误的回调 |
+| bookListId | String | 书单Id |
+##### 触发的回调
+`host_sdk.errorCallback(msg)`
 
-### searchBook 搜索书籍，显示搜索结果
-
->##### js调用
-```javascript
-window.hostsdk.searchBook('总裁'，function(msg){
-	alert(msg);
-});
-```
-
-> 参数：
-> 
-|参数名|类型|备注|
+### searchBook 直接搜索书籍，显示搜索结果
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
 |---	|---|---|
-| keyword | String | 搜索关键字 |
-| errorCallback | Function | 发生错误的回调 |
+| keyword | String | 关键字 |
+##### 触发的回调
+`host_sdk.errorCallback(msg)`
 
-### downloadBook 下载指定书籍(可以多本)
-
->##### js调用
-```javascript
-window.hostsdk.downloadBook(
-	'e809304b4c434b9fbe00a75eb2f7e31c,e809304b4c434b9fbe00a75eb2f7e31c',
-	function(bookId){
-		alert("下载书籍失败" + bookId);
-	},
-	function(bookId){
-		alert("下载书籍成功" + bookId);
-	}
-);
-```
-> 参数：
-> 
-|参数名|类型|备注|
+### downloadBook 下载指定的书籍
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
 |---	|---|---|
-| bookId | String | 书籍的Id |
-| errorCallback | Function | 下载失败的回调（携带bookId） |
-| successCallback | Function | 下载成功后的回调（携带bookId） |
+| bookId | String | 书籍id，多个逗号分割 |
+##### 触发的回调
+`host_sdk.errorCallback(bookId)`、`host_sdk.successCallback(bookId)`
+> > 每本书下载失败回调时，携带下载失败的书籍id；每次下载失败回调时，携带书籍id
 
 ### showBookDetail 显示书籍详情
-
->##### js调用
-```javascript
-window.hostsdk.showBookDetail('e809304b4c434b9fbe00a75eb2f7e31c',function(msg){
-	alert(msg);
-});
-```
-
-> 参数：
-> 
-|参数名|类型|备注|
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
 |---	|---|---|
-| bookId | String | 书籍的Id |
-| errorCallback | Function | 发生错误的回调 |
+| bookId | String | 书单Id |
+##### 触发的回调
+`host_sdk.errorCallback(msg)`
 
 ### recharge 打开充值界面
-> 用户调用充值过程中可能会
-
->##### js调用
-```javascript
-window.hostsdk.recharge(
-	function(orderId){
-		if(orderId!=""){
-			alert("用户取消充值：取消的订单为：" + orderId);
-		} else {
-			alert("用户放弃充值");
-		}		
-	},
-	function(orderId){
-		alert("充值成功，充值订单号：" + orderId);
-	}
-);
-```
-
-> 参数：
-> 
-|参数名|类型|备注|
-|---	|---|---|
-| cancelCallback | Function | 取消充值回调（如果用户充值过程中创建了订单，但是取消了支付，可以携带`orderId`参数。如果没有创建订单，则传递`""`） |
-| successCallback | Function | 充值成功之后的回调 并携带 orderId 参数，表示用户充值的订单号 |
+>##### 参数选项
+无
+##### 触发的回调
+`host_sdk.errorCallback(orderId)`、`host_sdk.successCallback(orderId)`、`host_sdk.cancelCallback(orderId)`
+> > 充成功后，携带订单号参数、失败或者取消时如果有订单号，也携带上
 
 ### login 打开登录界面
-
->##### js调用
-```javascript
-window.hostsdk.login(
-	function(){
-		alert("取消登录");
-	},
-	function( userId ){
-		alert("登录成功，用户ID：" + userId);
-	}
-);
-```
-
-> 参数：
-> 
-|参数名|类型|备注|
-|---	|---|---|
-| cancelCallback | Function | 取消登录时的回调 |
-| successCallback | Function | 登录成功之后的回调 并携带 userId 参数，表示用户的id |
+>##### 参数选项
+无
+##### 触发的回调
+`host_sdk.errorCallback(msg)`、`host_sdk.successCallback()`、`host_sdk.cancelCallback()`
 
 ### exit 关闭当前页面
-
->##### js调用
-```javascript
-window.hostsdk.exit();
-```
+>##### 参数选项
+无
+##### 触发的回调
+`host_sdk.errorCallback(msg)`
 
 ### setCloseable 设置是否可以关闭窗口
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| flag | boolean | 是否可以关闭 |
+##### 触发的回调
+`host_sdk.errorCallback(msg)`
 
->##### js调用（允许关闭）
-```javascript
-window.hostsdk.setCloseable(true);
-```
->##### js调用（不允许关闭）
-```javascript
-window.hostsdk.setCloseable(false);
-```
+### getVip 开通VIP
+>##### 参数选项
+无
+##### 触发的回调
+`host_sdk.errorCallback(msg)`、`host_sdk.successCallback()`、`host_sdk.cancelCallback()`
+
+### openUserCategory 打开用户个人书坊配置
+>##### 参数选项
+无
+##### 触发的回调
+`host_sdk.errorCallback(msg)`、`host_sdk.successCallback()`、`host_sdk.cancelCallback()`
+
+## JavaScript SDK
+>#### 由于Android和ios平台的差异，需要根据不同平台使用不同的调用方式。过程过于繁琐，影响前端开发效率。因此对本文档实现的交互功能做了更加易于使用的封装。
+#### 文档查看：[HostSdk.md](HostSdk.md)
+#### JS下载：[HostSdk.js](HostSdk.js)

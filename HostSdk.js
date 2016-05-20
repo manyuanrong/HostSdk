@@ -1,83 +1,184 @@
 /**
  * 与客户端交互的SDK
  */
-var HostSdk = (function () {
-    function HostSdk() {
+(function () {
+    // 判断平台的工具方法
+    var _ua = navigator.userAgent;
+    var client_tool = {
+        // 是否是Android
+        isAndroid: _ua.toLowerCase().indexOf("android") > -1 || _ua.toLowerCase().indexOf("linux") > -1,
+        // 是否是iPad
+        isIpad: _ua.indexOf("iPad") > -1,
+        // 是否是iPhone
+        isIphone: _ua.indexOf("iPhone") > -1,
+        // 是否在苹果设备
+        isApple: false
+    };
+    client_tool.isApple = (client_tool.isIphone === true || client_tool.isIpad === true);
+
+    // 苹果客户端jbridge
+    function setupWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) {
+            return callback(WebViewJavascriptBridge);
+        }
+        if (window.WVJBCallbacks) {
+            return window.WVJBCallbacks.push(callback);
+        }
+        window.WVJBCallbacks = [callback];
+        var WVJBIframe = document.createElement('iframe');
+        WVJBIframe.style.display = 'none';
+        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+        document.documentElement.appendChild(WVJBIframe);
+        setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
     }
-    // 当宿主APP加载网页完成时调用
-    HostSdk.prototype.onInit = function (version, userId, idfa) {
+    setupWebViewJavascriptBridge(function (bridge) {
+        window.ios_hostsdk = bridge;
+    });
+
+    // 客户端回调
+    window.host_sdk = {
+        // 生命周期方法，初始化
+        onInit: function () {
+            if (hostsdk && hostsdk.onInit) hostsdk.onInit();
+        },
+        // 生命周期方法，暂停执行
+        onPause: function () {
+            if (hostsdk && hostsdk.onPause) hostsdk.onPause();
+        },
+        // 生命周期方法，恢复执行
+        onResume: function () {
+            if (hostsdk && hostsdk.onResume) hostsdk.onResume();
+        },
+        // 生命周期方法，结束执行
+        onStop: function () {
+            if (hostsdk && hostsdk.onStop) hostsdk.onStop();
+        },
+
+        // 发生错误的回调
+        errorCallback: function (errorMsg) { },
+        // 取消操作后的回调
+        cancelCallback: function () { },
+        // 操作成功后回调
+        successCallback: function (platform) { }
     };
-    // 当宿主APP的WebView变得不可操作时调用。例如：在Android中Activity被遮挡或者APP退回到桌面时
-    HostSdk.prototype.onPause = function () {
+
+    // 封装SDK
+    window.hostsdk = {
+        share: function (options) {
+            if (options.successCallback) window.host_sdk.successCallback = options.successCallback;
+            if (options.errorCallback) window.host_sdk.errorCallback = options.errorCallback;
+            if (options.cancelCallback) window.host_sdk.cancelCallback = options.cancelCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("share", { "title": options.title, "desc": options.description, "url": options.url, "icon": options.icon, "platforms": options.platforms });
+            } else {
+                android_hostsdk.share(options.title, options.description, options.url, options.icon, options.platforms);
+            }
+        },
+        login: function (options) {
+            if (options.successCallback) window.host_sdk.successCallback = options.successCallback;
+            if (options.errorCallback) window.host_sdk.errorCallback = options.errorCallback;
+            if (options.cancelCallback) window.host_sdk.cancelCallback = options.cancelCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("login");
+            } else {
+                android_hostsdk.login();
+            }
+        },
+        recharge: function (options) {
+            if (options.successCallback) window.host_sdk.successCallback = options.successCallback;
+            if (options.errorCallback) window.host_sdk.errorCallback = options.errorCallback;
+            if (options.cancelCallback) window.host_sdk.cancelCallback = options.cancelCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("recharge");
+            } else {
+                android_hostsdk.recharge();
+            }
+        },
+        downloadBook: function (options) {
+            if (options.successCallback) window.host_sdk.successCallback = options.successCallback;
+            if (options.errorCallback) window.host_sdk.errorCallback = options.errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("downloadBook", options.bookId);
+            } else {
+                android_hostsdk.downloadBook(options.bookId);
+            }
+        },
+        getVip: function (options) {
+            if (options.successCallback) window.host_sdk.successCallback = options.successCallback;
+            if (options.cancelCallback) window.host_sdk.cancelCallback = options.cancelCallback;
+            if (options.errorCallback) window.host_sdk.errorCallback = options.errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("getVip");
+            } else {
+                android_hostsdk.getVip();
+            }
+        },
+        openUserCategory: function (options) {
+            if (options.successCallback) window.host_sdk.successCallback = options.successCallback;
+            if (options.cancelCallback) window.host_sdk.cancelCallback = options.cancelCallback;
+            if (options.errorCallback) window.host_sdk.errorCallback = options.errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("openUserCategory");
+            } else {
+                android_hostsdk.openUserCategory();
+            }
+        },
+        getInfo: function (options) {
+            if (options.successCallback) window.host_sdk.successCallback = options.successCallback;
+            if (options.errorCallback) window.host_sdk.errorCallback = options.errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("getInfo");
+            } else {
+                android_hostsdk.getInfo();
+            }
+        },
+        openBook: function (bookId, errorCallback) {
+            if (errorCallback) window.host_sdk.errorCallback = errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("openBook", bookId);
+            } else {
+                android_hostsdk.openBook(bookId);
+            }
+        },
+        showBookDetail: function (bookId, errorCallback) {
+            if (errorCallback) window.host_sdk.errorCallback = errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("showBookDetail", bookId);
+            } else {
+                android_hostsdk.showBookDetail(bookId);
+            }
+        },
+        openBookList: function (bookListId, errorCallback) {
+            if (errorCallback) window.host_sdk.errorCallback = errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("openBookList", bookListId);
+            } else {
+                android_hostsdk.openBookList(bookListId);
+            }
+        },
+        searchBook: function (keyword, errorCallback) {
+            if (errorCallback) window.host_sdk.errorCallback = errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("searchBook", keyword);
+            } else {
+                android_hostsdk.searchBook(keyword);
+            }
+        },
+        exit: function (errorCallback) {
+            if (errorCallback) window.host_sdk.errorCallback = errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("exit");
+            } else {
+                android_hostsdk.exit();
+            }
+        },
+        setCloseable: function (closable, errorCallback) {
+            if (errorCallback) window.host_sdk.errorCallback = errorCallback;
+            if (client_tool.isApple) {
+                ios_hostsdk.callHandler("setCloseable", closable);
+            } else {
+                android_hostsdk.setCloseable(closable);
+            }
+        }
     };
-    // 当宿主APP重新回到可以操作状态调用
-    HostSdk.prototype.onResume = function () {
-    };
-    // 当WebView被销毁时调用
-    HostSdk.prototype.onStop = function () {
-    };
-    // 调用客户端分享功能
-    HostSdk.prototype.share = function (
-        // 分享的标题
-        title, 
-        // 分享的链接
-        url, 
-        // 分享的文字描述内容
-        description, 
-        // 图片URL
-        icon, 
-        // 分享的类型：1、文字分享 2、图片分享
-        type, 
-        // 可以选择分享的平台多个平台逗号分割。qzone,wechat,qq,weibo
-        platforms, 
-        // 取消分享后的回调
-        cancelCallback, 
-        // 分享成功的回调，回调参数(platform:string)用户分享的平台
-        successCallback) {
-    };
-    // 打开并阅读一本书
-    HostSdk.prototype.openBook = function (
-        // 书籍Id
-        bookId) {
-    };
-    // 打开一个书单
-    HostSdk.prototype.openBookList = function (
-        // 书单ID
-        bookListId) {
-    };
-    // 直接搜索书籍，显示搜索结果
-    HostSdk.prototype.searchBook = function (
-        // 搜索关键字
-        keyword) {
-    };
-    // 下载指定书籍
-    HostSdk.prototype.downloadBook = function (
-        // 书籍Id
-        bookId, 
-        // 下载错误的回调（msg:string）
-        errorCallback, 
-        // 下载成功的回调（msg:string）
-        successCallback) {
-    };
-    // 显示书籍详情
-    HostSdk.prototype.showBookDetail = function (
-        // 书籍Id
-        bookId) {
-    };
-    // 打开充值界面
-    HostSdk.prototype.recharge = function (
-        // 取消充值的回调
-        cancelCallback, 
-        // 充值成功的回调(money:number, coin:number)
-        successCallback) {
-    };
-    // 用户登录
-    HostSdk.prototype.login = function (
-        // 取消登录的回调
-        cancelCallback, 
-        // 登录成功的回调(userId:string)
-        successCallback) {
-    };
-    return HostSdk;
 })();
-//# sourceMappingURL=HostSdk.js.map
