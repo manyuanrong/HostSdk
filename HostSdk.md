@@ -248,7 +248,7 @@ window.hostsdk.showBookDetail (bookId, errorCallback);
 >##### js调用
 ```javascript
 window.hostsdk.showBookDetail (
-	e809304b4c434b9fbe00a75eb2f7e31c",
+	"e809304b4c434b9fbe00a75eb2f7e31c",
 	function(msg){
 		alert(msg);
 	}
