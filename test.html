@@ -23,16 +23,20 @@
 </head>
 
 <body>
-	<button onclick="share()">分享</button><br />
-	<button onclick="openBook()">打开并阅读一本书</button><br />
-	<button onclick="openBookList()">打开一个书单</button><br />
-	<button onclick="searchBook()">搜索书籍，显示搜索结果</button><br />
-	<button onclick="downloadBook()">下载指定书籍</button><br />
-	<button onclick="showBookDetail()">显示书籍详情</button><br />
-	<button onclick="recharge()">打开充值界面</button><br />
-	<button onclick="login()">打开登录界面</button><br />
-	<button onclick="openPage()">新窗口打开页面</button><br />
+	<button onclick="share()">分享</button>
+	<button onclick="openBook()">阅读书籍《妾色生香》</button>
+	<button onclick="openBookList()">打开书单</button>
+	<button onclick="getVip()">开通VIP</button>
+	<button onclick="getInfo()">获取信息</button>
+	<button onclick="searchBook()">搜索“总裁”</button>
+	<button onclick="downloadBook()">下载书籍《闪婚总裁契约妻》《妾色生香》</button>
+	<button onclick="showBookDetail()">显示书籍详情《闪婚总裁契约妻》</button>
+	<button onclick="recharge()">打开充值界面</button>
+	<button onclick="login()">用户登录</button>
 	<button onclick="exit()">关闭当前页面</button>
+	<button onclick="setCloseable(false)">禁止关闭</button>
+	<button onclick="setCloseable(true)">允许关闭</button>
+	<button onclick="openUserCategory()">修改个人书坊配置</button>
 
 	<script>
 		host_sdk.onInit = function(){
@@ -49,33 +53,67 @@
 		};
 		
 			function share() {
-				hostsdk.share(
-					'标题',
-					'http://www.baidu.com',
-					'描述',
-					'http://m.ireadercity.com/webapp/img/logo.png',
-					'qzone,wechat',
-					function(){
-						alert("取消分享");
-					},
-					function(platform){
-						alert("分享成功！分享的平台为：" + platform);
-					},
+				window.hostsdk.share(
+					{
+						title: "标题",
+						description: "描述",
+						url: "http://m.ireadercity.com",
+						icon: "http://m.ireadercity.com/webapp/img/logo.png",
+						platforms: "qzone,wechat",
+						cancelCallback: function(){
+							alert("用户取消了分享");
+						},
+						successCallback: function(platform){
+							alert("分享成功！分享的平台为：" + platform);
+						},
+						errorCallback:function(msg){
+							alert(msg);
+						}
+					}
+				);
+			}
+			
+			function getInfo(){
+				window.hostsdk.getInfo(
+					{
+						successCallback: function(info){
+							alert("json类型的数据" + info);
+						},
+						errorCallback:function(msg){
+							alert(msg);
+						}
+					}
+				);
+			}
+			
+			function getVip(){
+				window.hostsdk.getVip(
+					{
+						successCallback: function(){
+							alert("开通VIP成功");
+						},
+						errorCallback:function(msg){
+							alert(msg);
+						},
+						cancelCallback:function(){
+							alert("取消开通");
+						}
+					}
+				);
+			}
+
+			function openBook() {
+				window.hostsdk.openBook (
+					"6b8bca1c2df24d9d844a9e0ac999cb07",
 					function(msg){
 						alert(msg);
 					}
 				);
 			}
 
-			function openBook() {
-				window.hostsdk.openBook('6b8bca1c2df24d9d844a9e0ac999cb07',function(msg){
-					alert(msg);
-				});
-			}
-
 			function openBookList() {
-				window.hostsdk.openBookList(
-					'e809304b4c434b9fbe00a75eb2f7e31c',
+				window.hostsdk.openBookList (
+					"d8d6aa3baadf4c5789735119b026e69f",
 					function(msg){
 						alert(msg);
 					}
@@ -83,8 +121,8 @@
 			}
 
 			function searchBook() {
-				window.hostsdk.searchBook(
-					'总裁',
+				window.hostsdk.searchBook (
+					"总裁",
 					function(msg){
 						alert(msg);
 					}
@@ -92,20 +130,22 @@
 			}
 
 			function downloadBook() {
-				window.hostsdk.downloadBook(
-					'e809304b4c434b9fbe00a75eb2f7e31c,dc1fb11b935543acbf0eea30a9ab2ac0,a2e0a37d0036491a8c3b12bdacb900b3',
-					function(bookId){
-						alert("下载书籍失败" + bookId);
-					},
-					function(bookId){
-						alert("下载书籍成功" + bookId);
+				window.hostsdk.downloadBook (
+					{
+						bookId: "e809304b4c434b9fbe00a75eb2f7e31c,6b8bca1c2df24d9d844a9e0ac999cb07",
+						successCallback:function(bookId){
+							alert("下载书籍成功" + bookId);
+						},
+						errorCallback:function(bookId){
+							alert("下载书籍失败" + bookId);
+						}
 					}
 				);
 			}
 
 			function showBookDetail() {
-				window.hostsdk.showBookDetail(
-					'e809304b4c434b9fbe00a75eb2f7e31c',
+				window.hostsdk.showBookDetail (
+					"e809304b4c434b9fbe00a75eb2f7e31c",
 					function(msg){
 						alert(msg);
 					}
@@ -113,39 +153,69 @@
 			}
 
 			function recharge() {
-				window.hostsdk.recharge(
-					function(orderId){
-						if(orderId!=""){
+				window.hostsdk.recharge (
+					{
+						cancelCallback:function(orderId){
+							if(orderId!=""){
 							alert("用户取消充值：取消的订单为：" + orderId);
-						} else {
-							alert("用户放弃充值");
-						}       
-					},
-					function(orderId){
-						alert("充值成功，充值订单号：" + orderId);
+							} else {
+								alert("用户放弃充值");
+							}    
+						},
+						successCallback:function(orderId){
+							alert("充值成功，充值订单号：" + orderId);
+						}
 					}
 				);
 			}
 
 			function login() {
-				window.hostsdk.login(
-					function() {
-						alert("取消登录");
-					},
-					function(userId) {
-						alert("登录成功，用户ID：" + userId);
+				window.hostsdk.login (
+					{
+						cancelCallback:function(){
+							alert("取消登录");  
+						},
+						successCallback:function(userId){
+							alert("登录成功，用户ID：" + userId);
+						}
+					}
+				);
+			}
+			
+			function exit() {
+				window.hostsdk.exit (
+					function(msg){
+						alert(msg);
+					}
+				);
+			}
+			
+			function setCloseable (flag){
+				window.hostsdk.setCloseable (
+					flag,
+					function(msg){
+						alert(msg);
+					}
+				);
+			}
+			
+			function openUserCategory (){
+				window.hostsdk.openUserCategory(
+					{
+						successCallback: function(){
+							alert("修改成功");
+						},
+						errorCallback:function(msg){
+							alert(msg);
+						},
+						cancelCallback:function(){
+							alert("取消修改");
+						}
 					}
 				);
 			}
 
-			function openPage() {
-				window.open("http://m.ireadercity.com/webapp/book/bookshelf.html", "_blank");
-				//window.hostsdk.openPage("http://www.baidu.com/");
-			}
-
-			function exit() {
-				window.hostsdk.exit();
-			}
+			
 	</script>
 </body>
 

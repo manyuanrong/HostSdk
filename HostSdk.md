@@ -335,7 +335,7 @@ window.hostsdk.exit(errorCallback);
 
 >##### js调用
 ```javascript
-window.hostsdk.searchBook (
+window.hostsdk.exit (
 	function(msg){
 		alert(msg);
 	}
@@ -344,7 +344,7 @@ window.hostsdk.searchBook (
 
 ### setCloseable 设置是否可以关闭窗口
 ```javascript
-window.hostsdk.exit(closable,errorCallback);
+window.hostsdk.setCloseable(closable,errorCallback);
 ```
 
 >##### 参数
@@ -394,7 +394,7 @@ window.hostsdk.openUserCategory(options);
 
 >##### js调用
 ```javascript
-window.hostsdk.getVip(
+window.hostsdk.openUserCategory(
 	{
 		successCallback: function(){
 			alert("修改成功");
