@@ -104,7 +104,7 @@ ios_hostsdk.callHandler(
 |setCloseable|设置是否可以关闭窗口（可以让js决定何时关闭窗口）|
 |getVip|开通vip|
 |openUserCategory|打开用户个人书坊配置|
-|downloadBookBag| 下载书包下#载指定的书籍,并指定一个书包名称#|
+|downloadBookBag| 下载书包#下载指定的书籍,并指定一个书包名称#|
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
@@ -176,12 +176,12 @@ ios_hostsdk.callHandler(
 `window.host_sdk.errorCallback(bookId)`、`window.host_sdk.successCallback(bookId)`
 > > 每本书下载失败回调时，携带下载失败的书籍id；每次下载失败回调时，携带书籍id
 
-### downloadBookBag 下载书包下。载指定的书籍,并指定一个书包名称
+### downloadBookBag 下载书包。下载指定的书籍,并指定一个书包名称
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
 | bookId | String | 书籍id，多个逗号分割 |
-| bookBagName | String | 书包名（文件夹名） |
+| name | String | 书包名（文件夹名） |
 ##### 触发的回调
 `window.host_sdk.errorCallback(bookId)`、`window.host_sdk.successCallback(bookId)`
 > > 每本书下载失败回调时，携带下载失败的书籍id；每次下载失败回调时，携带书籍id
