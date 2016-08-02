@@ -127,6 +127,21 @@ ios_hostsdk.callHandler(
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback(infoJson)`
 > > 获取成功后回调时，传递包含信息的json字符串
+>##### infoJson包含的参数
+| 参数名 | 类型 | 备注 |
+|---|---|---|
+| deviceID | String | 设备号 |
+| appID | String |  |
+| userId | String | 用户ID |
+| passID | String |  |
+| clientVersion | String | 客户端版本 |
+| deviceType | String | 客户端类型`Android`、`ios` |
+| channelID | String | 渠道Id |
+| isTempUser | String | 是否是临时用户`1`、`0` |
+| txtColor | String | 客户端前景色eg.`#ffffff` |
+| bgColor | String | 客户端背景色eg.`#ffffff` |
+| appPackageName | String | app包名 |
+| ver | String | 客户端版本 |
 
 ### openBook 打开并阅读一本书
 >##### 参数选项
