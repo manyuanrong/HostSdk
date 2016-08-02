@@ -25,7 +25,7 @@ HostSdk.js支持多种引用方式.
 |exit|关闭当前页面|
 |setCloseable|设置是否可以关闭窗口（可以让js决定何时关闭窗口）|
 |openUserCategory|打开用户个人书坊配置|
-|downloadBookBag|下载书包下#载指定的书籍,并指定一个书包名称#|
+|downloadBookBag|下载书包#下载指定的书籍,并指定一个书包名称#|
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
