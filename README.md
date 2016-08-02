@@ -53,9 +53,9 @@
 
 | 回调方法名信息 | 备注 |
 | --- | --- | --- | --- |
-| host_sdk.errorCallback | 网页发起操作后，客户端 **执行操作过程产生错误** 时调用 |
-| host_sdk.cancelCallback | 网页发起操作后，用户 **放弃操作** 时调用 |
-| host_sdk.successCallback | 网页发起操作后，客户端 **执行操作成功** 时调用 |
+| window.host_sdk.errorCallback | 网页发起操作后，客户端 **执行操作过程产生错误** 时调用 |
+| window.host_sdk.cancelCallback | 网页发起操作后，用户 **放弃操作** 时调用 |
+| window.host_sdk.successCallback | 网页发起操作后，客户端 **执行操作成功** 时调用 |
 
 ## 网页发起的操作
 由于Android设备和苹果设备的差异，因此网页发起操作的方式也不同。
@@ -104,6 +104,7 @@ ios_hostsdk.callHandler(
 |setCloseable|设置是否可以关闭窗口（可以让js决定何时关闭窗口）|
 |getVip|开通vip|
 |openUserCategory|打开用户个人书坊配置|
+|downloadBookBag| 下载书包下#载指定的书籍,并指定一个书包名称#|
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
@@ -116,7 +117,7 @@ ios_hostsdk.callHandler(
 | icon | String | 分享的图片 |
 | platforms | String | 要分享的平台，多个用逗号分割:qzone,qq,wechat,wechatcircle,weibo |
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`、`host_sdk.successCallback(platform)`、`host_sdk.cancelCallback()`
+`window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback(platform)`、`window.host_sdk.cancelCallback()`
 > > 分享成功后回调，携带用户选择的平台名
 
 ### getInfo 获取环境信息
@@ -124,7 +125,7 @@ ios_hostsdk.callHandler(
 >##### 参数选项
 无
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`、`host_sdk.successCallback(infoJson)`
+`window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback(infoJson)`
 > > 获取成功后回调时，传递包含信息的json字符串
 
 ### openBook 打开并阅读一本书
@@ -133,7 +134,7 @@ ios_hostsdk.callHandler(
 |---	|---|---|
 | bookId | String | 书籍Id |
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`
+`window.host_sdk.errorCallback(msg)`
 
 ### openBookList 打开指定的书单
 >##### 参数选项
@@ -141,7 +142,7 @@ ios_hostsdk.callHandler(
 |---	|---|---|
 | bookListId | String | 书单Id |
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`
+`window.host_sdk.errorCallback(msg)`
 
 ### searchBook 直接搜索书籍，显示搜索结果
 >##### 参数选项
@@ -149,7 +150,7 @@ ios_hostsdk.callHandler(
 |---	|---|---|
 | keyword | String | 关键字 |
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`
+`window.host_sdk.errorCallback(msg)`
 
 ### downloadBook 下载指定的书籍
 >##### 参数选项
@@ -157,7 +158,17 @@ ios_hostsdk.callHandler(
 |---	|---|---|
 | bookId | String | 书籍id，多个逗号分割 |
 ##### 触发的回调
-`host_sdk.errorCallback(bookId)`、`host_sdk.successCallback(bookId)`
+`window.host_sdk.errorCallback(bookId)`、`window.host_sdk.successCallback(bookId)`
+> > 每本书下载失败回调时，携带下载失败的书籍id；每次下载失败回调时，携带书籍id
+
+### downloadBookBag 下载书包下。载指定的书籍,并指定一个书包名称
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| bookId | String | 书籍id，多个逗号分割 |
+| bookBagName | String | 书包名（文件夹名） |
+##### 触发的回调
+`window.host_sdk.errorCallback(bookId)`、`window.host_sdk.successCallback(bookId)`
 > > 每本书下载失败回调时，携带下载失败的书籍id；每次下载失败回调时，携带书籍id
 
 ### showBookDetail 显示书籍详情
@@ -166,26 +177,26 @@ ios_hostsdk.callHandler(
 |---	|---|---|
 | bookId | String | 书单Id |
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`
+`window.host_sdk.errorCallback(msg)`
 
 ### recharge 打开充值界面
 >##### 参数选项
 无
 ##### 触发的回调
-`host_sdk.errorCallback(orderId)`、`host_sdk.successCallback(orderId)`、`host_sdk.cancelCallback(orderId)`
+`window.host_sdk.errorCallback(orderId)`、`window.host_sdk.successCallback(orderId)`、`window.host_sdk.cancelCallback(orderId)`
 > > 充成功后，携带订单号参数、失败或者取消时如果有订单号，也携带上
 
 ### login 打开登录界面
 >##### 参数选项
 无
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`、`host_sdk.successCallback()`、`host_sdk.cancelCallback()`
+`window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback()`、`window.host_sdk.cancelCallback()`
 
 ### exit 关闭当前页面
 >##### 参数选项
 无
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`
+`window.host_sdk.errorCallback(msg)`
 
 ### setCloseable 设置是否可以关闭窗口
 >##### 参数选项
@@ -193,19 +204,19 @@ ios_hostsdk.callHandler(
 |---	|---|---|
 | flag | boolean | 是否可以关闭 |
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`
+`window.host_sdk.errorCallback(msg)`
 
 ### getVip 开通VIP
 >##### 参数选项
 无
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`、`host_sdk.successCallback()`、`host_sdk.cancelCallback()`
+`window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback()`、`window.host_sdk.cancelCallback()`
 
 ### openUserCategory 打开用户个人书坊配置
 >##### 参数选项
 无
 ##### 触发的回调
-`host_sdk.errorCallback(msg)`、`host_sdk.successCallback()`、`host_sdk.cancelCallback()`
+`window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback()`、`window.host_sdk.cancelCallback()`
 
 ## JavaScript SDK
 >#### 由于Android和ios平台的差异，需要根据不同平台使用不同的调用方式。过程过于繁琐，影响前端开发效率。因此对本文档实现的交互功能做了更加易于使用的封装。
