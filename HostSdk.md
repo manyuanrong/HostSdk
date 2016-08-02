@@ -3,10 +3,15 @@
 ## 说明
 本文档针对JavaScript如何与客户端交互做了详细说明
 注：适用于网页前端开发人员
+## 使用提示
+HostSdk.js支持多种引用方式.
+-直接引用可以通过`window.hostsdk`访问接口对象。
+-CMD、AMD方式引用，可以随意指定引用名称。比如`var HostSdk = require("hostsdk路径");`则可以通过HostSdk引用。
 
 ## 接口一览
 |方法名|备注|
 |---|---|
+|init|分享|
 |share|分享|
 |getInfo|获取环境信息（userId，deviceId，idfa，version，channel...）|
 |openBook|打开并阅读一本书|
@@ -20,6 +25,7 @@
 |exit|关闭当前页面|
 |setCloseable|设置是否可以关闭窗口（可以让js决定何时关闭窗口）|
 |openUserCategory|打开用户个人书坊配置|
+|downloadBookBag|下载书包下#载指定的书籍,并指定一个书包名称#|
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
@@ -404,6 +410,41 @@ window.hostsdk.openUserCategory(
 		},
 		cancelCallback:function(){
 			alert("取消修改");
+		}
+	}
+);
+```
+
+### downloadBookBag 下载书包。下载指定的书籍,并指定一个书包名称
+```javascript
+window.hostsdk.downloadBookBag (options);
+```
+
+>##### 参数
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| options | Object | 选项 |
+
+>##### options 参数选项
+|参数名|类型|备注|
+|---	|---|---|
+| bookId | String | 书籍的Id |
+| name | String | 书包名 |
+| successCallback | Function | 下载成功后的回调（携带bookId） **(可选)** |
+| errorCallback | Function | 下载失败的回调（携带bookId） **(可选)** |
+
+>##### js调用
+```javascript
+window.hostsdk.downloadBookBag (
+	{
+		bookId: "e809304b4c434b9fbe00a75eb2f7e31c,e809304b4c434b9fbe00a75eb2f7e31c",
+		name: "书包第一期",
+		successCallback:function(bookId){
+			alert("下载书籍成功" + bookId);
+		},
+		errorCallback:function(bookId){
+			alert("下载书籍失败" + bookId);
 		}
 	}
 );
