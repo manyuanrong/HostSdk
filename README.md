@@ -234,7 +234,7 @@ ios_hostsdk.callHandler(
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback()`、`window.host_sdk.cancelCallback()`
 
-### openShalfFolder 架中的书包
+### openShalfFolder 打开书架中的文件夹
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
