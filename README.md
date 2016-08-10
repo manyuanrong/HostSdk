@@ -105,7 +105,7 @@ ios_hostsdk.callHandler(
 |getVip|开通vip|
 |openUserCategory|打开用户个人书坊配置|
 |downloadBookBag| 下载书包#下载指定的书籍,并指定一个书包名称#|
-|openShalfFolder| 打开书架中的书包 |
+|openShalfFolder| 打开书架中的文件夹 |
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
