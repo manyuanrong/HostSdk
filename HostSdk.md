@@ -1,6 +1,6 @@
 # ![logo](http://m.ireadercity.com/webapp/img/logo.png) 书香云集js与客户端交互接口文档
 
-## 说明
+## 说明1.0
 本文档针对JavaScript如何与客户端交互做了详细说明
 注：适用于网页前端开发人员
 ## 使用提示
