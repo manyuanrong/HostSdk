@@ -431,8 +431,8 @@ window.hostsdk.downloadBookBag (options);
 |参数名|类型|备注|
 |---	|---|---|
 | bookId | String | 书籍的Id |
-| folderId | String | 文件夹Id(比如：书包Id)  |
 | name | String | 文件夹名(比如：书包名) |
+| folderId | String | 文件夹Id(比如：书包Id) [注：只限安卓有] |
 | successCallback | Function | 下载成功后的回调（携带bookId） **(可选)** |
 | errorCallback | Function | 下载失败的回调（携带bookId） **(可选)** |
 
@@ -467,8 +467,8 @@ window.hostsdk.openShelfFolder (folderId,name,errorCallback);
 >##### options 参数选项
 |参数名|类型|备注|
 |---	|---|---|
-| folderId | String | 书架的文件夹Id(比如：书包Id)  |
 | name | String | 文件夹名（比如：书包名） |
+| folderId | String | 书架的文件夹Id(比如：书包Id) [注：只限安卓有] |
 | errorCallback | Function | 发生错误后的回调 (可选) |
 
 >##### js调用

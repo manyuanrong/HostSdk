@@ -177,17 +177,6 @@ ios_hostsdk.callHandler(
 `window.host_sdk.errorCallback(bookId)`、`window.host_sdk.successCallback(bookId)`
 > > 每本书下载失败回调时，携带下载失败的书籍id；每次下载失败回调时，携带书籍id
 
-### downloadBookBag 下载书包。下载指定的书籍,并指定一个书包名称
->##### 参数选项
-| 参数名 | 类型 | 备注 |
-|---	|---|---|
-| bookId | String | 书籍id，多个逗号分割 |
-| folderId | String | 文件夹Id(比如：书包Id)  |
-| name | String | 书包名（文件夹名） |
-##### 触发的回调
-`window.host_sdk.errorCallback(bookId)`、`window.host_sdk.successCallback(bookId)`
-> > 每本书下载失败回调时，携带下载失败的书籍id；每次下载失败回调时，携带书籍id
-
 ### showBookDetail 显示书籍详情
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
@@ -235,11 +224,22 @@ ios_hostsdk.callHandler(
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback()`、`window.host_sdk.cancelCallback()`
 
+### downloadBookBag 下载书包。下载指定的书籍,并指定一个书包名称
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| bookId | String | 书籍id，多个逗号分割 |
+| name | String | 书包名（文件夹名） |
+| folderId | String | 文件夹Id(比如：书包Id) [注：只限安卓有] |
+##### 触发的回调
+`window.host_sdk.errorCallback(bookId)`、`window.host_sdk.successCallback(bookId)`
+> > 每本书下载失败回调时，携带下载失败的书籍id；每次下载失败回调时，携带书籍id
+
 ### openShelfFolder 打开书架中的文件夹
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
-| folderId | String | 文件夹Id(比如：书包Id) |
+| folderId | String | 文件夹Id(比如：书包Id) [注：只限安卓有] | 
 | name | String | 文件夹名（比如：书包名） |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
