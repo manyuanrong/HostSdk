@@ -471,11 +471,9 @@ window.hostsdk.openShelfFolder (name,errorCallback);
 >##### js调用
 ```javascript
 window.hostsdk.openShelfFolder (
-	{
-		"书包第一期",
-		function(msg){
-			alert(msg);
-		}
+	"书包第一期",
+	function(msg){
+		alert(msg);
 	}
 );
 ```
