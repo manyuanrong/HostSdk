@@ -230,7 +230,7 @@ ios_hostsdk.callHandler(
 |---	|---|---|
 | bookId | String | 书籍id，多个逗号分割 |
 | name | String | 书包名（文件夹名） |
-| folderId | String | 文件夹Id(比如：书包Id) [注：只限安卓有] |
+| folderId | String | 文件夹Id(比如：书包Id) |
 ##### 触发的回调
 `window.host_sdk.errorCallback(bookId)`、`window.host_sdk.successCallback(bookId)`
 > > 每本书下载失败回调时，携带下载失败的书籍id；每次下载失败回调时，携带书籍id
@@ -239,7 +239,7 @@ ios_hostsdk.callHandler(
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
-| folderId | String | 文件夹Id(比如：书包Id) [注：只限安卓有] | 
+| folderId | String | 文件夹Id(比如：书包Id) | 
 | name | String | 文件夹名（比如：书包名） |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
