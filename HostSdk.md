@@ -26,7 +26,7 @@ HostSdk.js支持多种引用方式.
 |setCloseable|设置是否可以关闭窗口（可以让js决定何时关闭窗口）|
 |openUserCategory|打开用户个人书坊配置|
 |downloadBookBag|下载书包#下载指定的书籍,并指定一个书包名称#|
-|openShalfFolder|打开书架中的文件夹|
+|openShelfFolder|打开书架中的文件夹|
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
@@ -451,9 +451,9 @@ window.hostsdk.downloadBookBag (
 );
 ```
 
-### openShalfFolder 打开书架中的文件夹
+### openShelfFolder 打开书架中的文件夹
 ```javascript
-window.hostsdk.openShalfFolder (bagName,errorCallback);
+window.hostsdk.openShelfFolder (name,errorCallback);
 ```
 
 >##### 参数
@@ -465,12 +465,12 @@ window.hostsdk.openShalfFolder (bagName,errorCallback);
 >##### options 参数选项
 |参数名|类型|备注|
 |---	|---|---|
-| bagName | String | 书包的名称（文件夹名） |
+| name | String | 书架的文件夹名 |
 | errorCallback | Function | 发生错误后的回调 (可选) |
 
 >##### js调用
 ```javascript
-window.hostsdk.openShalfFolder (
+window.hostsdk.openShelfFolder (
 	{
 		"书包第一期",
 		function(msg){
