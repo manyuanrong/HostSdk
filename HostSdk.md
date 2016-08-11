@@ -440,7 +440,7 @@ window.hostsdk.downloadBookBag (options);
 ```javascript
 window.hostsdk.downloadBookBag (
 	{
-		bookId: "e809304b4c434b9fbe00a75eb2f7e31c,e809304b4c434b9fbe00a75eb2f7e31c",
+		bookId: "e809304b4c434b9fbe00a75eb2f7e31c,6b8bca1c2df24d9d844a9e0ac999cb07",
 		folderId: "39d8fab49bc6601dd7c713db0c3ee9f8",
 		name: "书包第一期",
 		successCallback:function(bookId){
