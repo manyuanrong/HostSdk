@@ -473,11 +473,11 @@ window.hostsdk.openShelfFolder (folderId,name,errorCallback);
 
 >##### js调用
 ```javascript
-window.hostsdk.openShelfFolder (
-	"39d8fab49bc6601dd7c713db0c3ee9f8",
-	"书包第一期",
-	function(msg){
-		alert(msg);
-	}
-);
+window.hostsdk.openShelfFolder({
+        name: "书包第一期",
+        folderId: "39d8fab49bc6601dd7c713db0c3ee9f8",
+        errorCallback: function(msg) {
+            alert("打开背包失败" + msg);
+        }
+});
 ```
