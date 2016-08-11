@@ -240,6 +240,7 @@ ios_hostsdk.callHandler(
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
 | folderId | String | 文件夹Id(比如：书包Id) |
+| name | String | 文件夹名（比如：书包名） |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
 
