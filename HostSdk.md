@@ -455,7 +455,7 @@ window.hostsdk.downloadBookBag (
 
 ### openShelfFolder 打开书架中的文件夹
 ```javascript
-window.hostsdk.openShelfFolder (name,errorCallback);
+window.hostsdk.openShelfFolder (folderId,errorCallback);
 ```
 
 >##### 参数
