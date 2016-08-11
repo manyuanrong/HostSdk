@@ -431,7 +431,8 @@ window.hostsdk.downloadBookBag (options);
 |参数名|类型|备注|
 |---	|---|---|
 | bookId | String | 书籍的Id |
-| name | String | 书包名 |
+| name | String | 文件夹名(比如：书包名) |
+| folderId | String | 文件夹Id(比如：书包Id)  |
 | successCallback | Function | 下载成功后的回调（携带bookId） **(可选)** |
 | errorCallback | Function | 下载失败的回调（携带bookId） **(可选)** |
 
@@ -441,6 +442,7 @@ window.hostsdk.downloadBookBag (
 	{
 		bookId: "e809304b4c434b9fbe00a75eb2f7e31c,e809304b4c434b9fbe00a75eb2f7e31c",
 		name: "书包第一期",
+		folderId: "39d8fab49bc6601dd7c713db0c3ee9f8",
 		successCallback:function(bookId){
 			alert("下载书籍成功" + bookId);
 		},
@@ -465,13 +467,13 @@ window.hostsdk.openShelfFolder (name,errorCallback);
 >##### options 参数选项
 |参数名|类型|备注|
 |---	|---|---|
-| name | String | 书架的文件夹名 |
+| folderId | String | 书架的文件夹Id(比如：书包Id)  |
 | errorCallback | Function | 发生错误后的回调 (可选) |
 
 >##### js调用
 ```javascript
 window.hostsdk.openShelfFolder (
-	"书包第一期",
+	"39d8fab49bc6601dd7c713db0c3ee9f8",
 	function(msg){
 		alert(msg);
 	}
