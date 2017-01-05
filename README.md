@@ -106,6 +106,8 @@ ios_hostsdk.callHandler(
 |openUserCategory|打开用户个人书坊配置|
 |downloadBookBag| 下载书包#下载指定的书籍,并指定一个书包名称#|
 |openShelfFolder| 打开书架中的文件夹 |
+|copyText| 复制文本内容 |
+|openWeixin| 打开微信客户端 |
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
@@ -243,6 +245,23 @@ ios_hostsdk.callHandler(
 | name | String | 文件夹名（比如：书包名） |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
+
+### copyText 复制文本内容
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| text | String | 需要设置复制的文本 | 
+##### 触发的回调
+`window.host_sdk.errorCallback(msg)`
+
+### openWeixin 打开微信客户端
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| text | String | 打开微信并复制的文本（可选，默认无复制） | 
+##### 触发的回调
+`window.host_sdk.errorCallback(msg)`
+
 
 ## JavaScript SDK
 >#### 由于Android和ios平台的差异，需要根据不同平台使用不同的调用方式。过程过于繁琐，影响前端开发效率。因此对本文档实现的交互功能做了更加易于使用的封装。
