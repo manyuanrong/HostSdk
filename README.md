@@ -7,7 +7,7 @@
 > * 采用自定义的schema方式只能由js调起客户端的相应功能。
 > * window.location = "xxx://xxx" 这种形式容易阻断部分js功能的执行。
 > * 缺少操作的回调机制。比如何时分享成功和分享失败。
-> 
+>
 > 新的交互机制加入了回调的支持，加入了生命周期概念，目的在于可以对整个交互过程进行操作把控。
 
 > Android 4.2 以下的系统有严重安全隐患。可以使用 [Safe Java-JS WebView Bridge](https://github.com/pedant/safe-java-js-webview-bridge)
@@ -38,7 +38,7 @@
 ## 客户端回调
 事件回调是App客户端主动调用，用于告知/通知 js,以便于js可以在适当时候做特殊处理。分为 **生命周期回调** 和 **操作回调**
 
-#### 生命周期回调 
+#### 生命周期回调
 生命周期回调由客户端主动发起，是有序的调用，并且一定会调用。自动触发。
 
 | 回调方法名信息 | 备注 |
@@ -108,6 +108,7 @@ ios_hostsdk.callHandler(
 |openShelfFolder| 打开书架中的文件夹 |
 |copyText| 复制文本内容 |
 |openWeixin| 打开微信客户端 |
+|setViewTitle| 设置 app 内显示的标题 |
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
@@ -241,7 +242,7 @@ ios_hostsdk.callHandler(
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
-| folderId | String | 文件夹Id(比如：书包Id) | 
+| folderId | String | 文件夹Id(比如：书包Id) |
 | name | String | 文件夹名（比如：书包名） |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
@@ -250,7 +251,7 @@ ios_hostsdk.callHandler(
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
-| text | String | 需要设置复制的文本 | 
+| text | String | 需要设置复制的文本 |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
 
@@ -258,10 +259,17 @@ ios_hostsdk.callHandler(
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
-| text | String | 打开微信并复制的文本（可选，默认无复制） | 
+| text | String | 打开微信并复制的文本（可选，默认无复制） |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
 
+### setViewTitle 设置 app 内显示的标题
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| title | String | 需要设置的标题文本 |
+##### 触发的回调
+`window.host_sdk.errorCallback(msg)`
 
 ## JavaScript SDK
 >#### 由于Android和ios平台的差异，需要根据不同平台使用不同的调用方式。过程过于繁琐，影响前端开发效率。因此对本文档实现的交互功能做了更加易于使用的封装。
