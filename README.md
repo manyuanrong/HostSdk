@@ -253,13 +253,10 @@ ios_hostsdk.callHandler(
 |---	|---|---|
 | text | String | 需要设置复制的文本 |
 ##### 触发的回调
-`window.host_sdk.errorCallback(msg)`
-
+`window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback(msg)`
 ### openWeixin 打开微信客户端
 >##### 参数选项
-| 参数名 | 类型 | 备注 |
-|---	|---|---|
-| text | String | 打开微信并复制的文本（可选，默认无复制） |
+无
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
 
