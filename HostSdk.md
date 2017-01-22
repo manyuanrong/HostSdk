@@ -28,6 +28,10 @@ HostSdk.js支持多种引用方式.
 |downloadBookBag|下载书包#下载指定的书籍,并指定一个书包名称#|
 |openShelfFolder|打开书架中的文件夹|
 
+|copyText|复制文本内容|
+|openWeixin|打开微信客户端|
+|setViewTitle|设置 app 内显示的标题|
+
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
 ```javascript
@@ -480,6 +484,79 @@ window.hostsdk.openShelfFolder(
 	        errorCallback: function(msg) {
 	            alert("打开背包失败" + msg);
 	        }
+	}
+);
+```
+
+### openWeixin 打开微信客户端
+```javascript
+window.hostsdk.openWeixin(errorCallback);
+```
+
+>##### 参数
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| errorCallback | Function | 发生错误后的回调 **(可选)** |
+
+>##### js调用
+```javascript
+window.hostsdk.openWeixin (
+	function(msg){
+		alert(msg);
+	}
+);
+```
+
+### copyText 复制文本内容
+```javascript
+window.hostsdk.copyText(errorCallback);
+```
+
+>##### 参数
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| options | Object | 选项 |
+
+>##### options 参数选项
+|参数名|类型|备注|
+|---	|---|---|
+| text | String | 被复制文本内容 |
+| successCallback | Function | 复制成功的回调 (可选) |
+| errorCallback | Function | 复制错误后的回调 (可选) |
+
+>##### js调用
+```javascript
+window.hostsdk.copyText (
+	{
+	        text: "复制文本测试",
+		successCallback : function () {
+			alert( "复制文本成功" );
+		} ,
+	        errorCallback: function(msg) {
+	    		alert(msg);
+	        }
+	}
+);
+```
+
+### setViewTitle 设置 app 内显示的标题
+```javascript
+window.hostsdk.setViewTitle(errorCallback);
+```
+
+>##### 参数
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| errorCallback | Function | 发生错误后的回调 **(可选)** |
+
+>##### js调用
+```javascript
+window.hostsdk.setViewTitle (
+	function(msg){
+		alert(msg);
 	}
 );
 ```
