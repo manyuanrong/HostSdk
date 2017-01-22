@@ -459,7 +459,7 @@ window.hostsdk.downloadBookBag (
 
 ### openShelfFolder 打开书架中的文件夹
 ```javascript
-window.hostsdk.openShelfFolder (folderId,name,errorCallback);
+window.hostsdk.openShelfFolder (options);
 ```
 
 >##### 参数
@@ -510,7 +510,7 @@ window.hostsdk.openWeixin (
 
 ### copyText 复制文本内容
 ```javascript
-window.hostsdk.copyText(errorCallback);
+window.hostsdk.copyText(options);
 ```
 
 >##### 参数
