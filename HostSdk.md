@@ -27,10 +27,9 @@ HostSdk.js支持多种引用方式.
 |openUserCategory|打开用户个人书坊配置|
 |downloadBookBag|下载书包#下载指定的书籍,并指定一个书包名称#|
 |openShelfFolder|打开书架中的文件夹|
-
 |copyText|复制文本内容|
 |openWeixin|打开微信客户端|
-|setViewTitle|设置 app 内显示的标题|
+|setViewTitle|设置app内显示的标题|
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
