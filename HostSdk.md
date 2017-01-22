@@ -530,13 +530,13 @@ window.hostsdk.copyText(errorCallback);
 ```javascript
 window.hostsdk.copyText (
 	{
-	        text: "复制文本测试",
+		text: "复制文本测试",
 		successCallback : function () {
 			alert( "复制文本成功" );
-		} ,
-	        errorCallback: function(msg) {
-	    		alert(msg);
-	        }
+		},
+		errorCallback: function(msg) {
+			alert(msg);
+		}
 	}
 );
 ```
