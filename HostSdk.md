@@ -11,8 +11,7 @@ HostSdk.js支持多种引用方式.
 ## 接口一览
 |方法名|备注|
 |---|---|
-|init|分享|
-|share|分享|
+|init|初始化信息|
 |getInfo|获取环境信息（userId，deviceId，idfa，version，channel...）|
 |openBook|打开并阅读一本书|
 |openBookList|打开指定的书单|
@@ -30,6 +29,10 @@ HostSdk.js支持多种引用方式.
 |copyText|复制文本内容|
 |openWeixin|打开微信客户端|
 |setViewTitle|设置app内显示的标题|
+|share|分享|
+|openBookListDetail|打开书单详情|
+|pay|支付|
+
 
 ### share 分享
 > 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
@@ -76,6 +79,7 @@ window.hostsdk.share(
 );
 ```
 
+
 ### getInfo 获取环境信息
 > 获取环境信息（userId，deviceId，idfa，version，channel...）
 ```javascript
@@ -108,12 +112,12 @@ window.hostsdk.getInfo(
 );
 ```
 
+
 ### getVip 开通VIP
 > 开通VIP
 ```javascript
 window.hostsdk.getVip(options);
 ```
-
 >##### 参数
 > 
 |参数名|类型|备注|
@@ -144,6 +148,7 @@ window.hostsdk.getVip(
 );
 ```
 
+
 ### openBook 打开并阅读一本书
 ```javascript
 window.hostsdk.openBook (bookId,errorCallback);
@@ -165,6 +170,7 @@ window.hostsdk.openBook (
 	}
 );
 ```
+
 
 ### openBookList 打开一个书单
 ```javascript
@@ -188,6 +194,7 @@ window.hostsdk.openBookList (
 );
 ```
 
+
 ### searchBook 搜索书籍，显示搜索结果
 ```javascript
 window.hostsdk.searchBook (keyword, errorCallback);
@@ -209,6 +216,7 @@ window.hostsdk.searchBook (
 	}
 );
 ```
+
 
 ### downloadBook 下载指定书籍(可以多本)
 ```javascript
@@ -243,6 +251,7 @@ window.hostsdk.downloadBook (
 );
 ```
 
+
 ### showBookDetail 显示书籍详情
 ```javascript
 window.hostsdk.showBookDetail (bookId, errorCallback);
@@ -264,6 +273,7 @@ window.hostsdk.showBookDetail (
 	}
 );
 ```
+
 
 ### recharge 打开充值界面
 > 用户调用充值过程中，我们可能会用到
@@ -301,6 +311,7 @@ window.hostsdk.recharge (
 );
 ```
 
+
 ### login 打开登录界面
 ```javascript
 window.hostsdk.login (options);
@@ -332,6 +343,7 @@ window.hostsdk.login (
 );
 ```
 
+
 ### exit 关闭当前页面
 ```javascript
 window.hostsdk.exit(errorCallback);
@@ -351,6 +363,7 @@ window.hostsdk.exit (
 	}
 );
 ```
+
 
 ### setCloseable 设置是否可以关闭窗口
 ```javascript
@@ -382,6 +395,7 @@ window.hostsdk.setCloseable (
 	}
 );
 ```
+
 
 ### openUserCategory 打开用户个人书坊配置
 > 打开用户个人书坊配置
@@ -418,6 +432,7 @@ window.hostsdk.openUserCategory(
 	}
 );
 ```
+
 
 ### downloadBookBag 下载书包。下载指定的书籍,并指定一个书包名称
 ```javascript
@@ -456,6 +471,7 @@ window.hostsdk.downloadBookBag (
 );
 ```
 
+
 ### openShelfFolder 打开书架中的文件夹
 ```javascript
 window.hostsdk.openShelfFolder (options);
@@ -487,6 +503,7 @@ window.hostsdk.openShelfFolder(
 );
 ```
 
+
 ### openWeixin 打开微信客户端
 ```javascript
 window.hostsdk.openWeixin(errorCallback);
@@ -506,6 +523,7 @@ window.hostsdk.openWeixin (
 	}
 );
 ```
+
 
 ### copyText 复制文本内容
 ```javascript
@@ -540,6 +558,7 @@ window.hostsdk.copyText (
 );
 ```
 
+
 ### setViewTitle 设置 app 内显示的标题
 ```javascript
 window.hostsdk.setViewTitle(errorCallback);
@@ -557,5 +576,68 @@ window.hostsdk.setViewTitle (
 	function(msg){
 		alert(msg);
 	}
+);
+```
+
+
+### openBookListDetail 打开书单详情
+```javascript
+window.hostsdk.openBookListDetail (id, errorCallback);
+```
+
+>##### 参数
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| id | String | 书单详情的Id |
+| errorCallback | Function | 发生错误后的回调 **(可选)** |
+
+>##### js调用
+```javascript
+window.hostsdk.openBookListDetail (
+    "d8d6aa3baadf4c5789735119b026e69f",
+    function(msg){
+        alert(msg);
+    }
+);
+```
+
+
+### pay 调用支付
+```javascript
+window.hostsdk.pay (options);
+```
+
+>##### 参数
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| options | Object | 选项 |
+
+>##### options 参数选项
+|参数名|类型|备注|
+|---	|---|---|
+| money | Number | 钱 |
+| way | String | 支付方式 [注：wechat/alipay/ios] |
+| errorCallback | Function | 发生错误后的回调 (可选) |
+| successCallback | Function | 成功支付后的回调 (可选) |
+| cancelCallback | Function | 取消支付后的回调 (可选) |
+
+>##### js调用
+```javascript
+window.hostsdk.openShelfFolder(
+    {
+        money: "10",
+        way: "wechat",
+        errorCallback: function(msg) {
+            alert("支付失败" + msg);
+        }
+	successCallback: function(msg) {
+            alert("成功支付" + msg);
+        }
+	cancelCallback: function(msg) {
+            alert("取消支付" + msg);
+        }
+    }
 );
 ```
