@@ -1,4 +1,4 @@
-# ![logo](http://m.ireadercity.com/webapp/img/logo.png) 书香云集js与客户端交互文档0.1
+# ![logo](http://m.ireadercity.com/webapp/img/logo.png) 书香云集js与客户端交互文档
 
 ## 设计概要
 #### 设计目的
@@ -32,7 +32,9 @@
 
 #### 安全机制
 > 为了保证客户端的安全，防止打开第三方不可信任的地址。造成恶意读取用户信息的安全隐患。设计了安全机制。
-> 在适当的时候，客户端向服务端请求一个可信任网址列表（客户端自行考虑）。也可以在访问页面之前，向服务端特定的接口验证是否是可信任地址。如果是，则将 `userId` 等敏感参数通过 `onInit` 传递给网页。
+> 在适当的时候，客户端向服务端请求一个可信任网址列表（客户端自行考虑）。也可以在访问页面之前，向服务端特定的接口验证是否是可信任地址。如果是，则将 `userId` 等敏感参数通过 
+
+`onInit` 传递给网页。
 > 可信任地址允许使用简单通配符 `*` 例如 `*.ireadercity.com*`
 
 ## 客户端回调
@@ -91,7 +93,6 @@ ios_hostsdk.callHandler(
 #### 操作一览
 | 操作 | 备注 |
 | --- | --- |
-| share | 分享 |
 |getInfo|获取环境信息（userId，deviceId，idfa，version，channel...）|
 |openBook|打开并阅读一本书|
 |openBookList|打开指定的书单|
@@ -109,20 +110,9 @@ ios_hostsdk.callHandler(
 |copyText| 复制文本内容 |
 |openWeixin| 打开微信客户端 |
 |setViewTitle| 设置 app 内显示的标题 |
-
-### share 分享
-> 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
->##### 参数选项
-| 参数名 | 类型 | 备注 |
-|---	|---|---|
-| title | String | 分享的标题 |
-| url | String |分享的链接 |
-| description | String | 分享描述 |
-| icon | String | 分享的图片 |
-| platforms | String | 要分享的平台，多个用逗号分割:qzone,qq,wechat,wechatcircle,weibo |
-##### 触发的回调
-`window.host_sdk.errorCallback(msg)`、`window.host_sdk.successCallback(platform)`、`window.host_sdk.cancelCallback()`
-> > 分享成功后回调，携带用户选择的平台名
+| share | 分享 |
+|openBookListDetail| 打开书单详情 |
+|pay| 调用支付 |
 
 ### getInfo 获取环境信息
 > 获取信息，包括userId，deviceId，idfa，version，channel等等
@@ -267,6 +257,41 @@ ios_hostsdk.callHandler(
 | title | String | 需要设置的标题文本 |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
+
+### share 分享
+> 分享形式根据参数判断。比如，icon为空的情况下，分享文字内容。有description和icon的情况下，就是图文内容。
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| title | String | 分享的标题 |
+| url | String |分享的链接 |
+| description | String | 分享描述 |
+| icon | String | 分享的图片 |
+| platforms | String | 要分享的平台，多个用逗号分割:qzone,qq,wechat,wechatcircle,weibo |
+##### 触发的回调
+`window.host_sdk.errorCallback(msg)`、
+`window.host_sdk.successCallback(platform)`、
+`window.host_sdk.cancelCallback()`
+> > 分享成功后回调，携带用户选择的平台名
+
+### openBookListDetail 打开书单详情
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| id | String | 书单Id |
+##### 触发的回调
+`window.host_sdk.errorCallback(msg)`
+
+### pay 调用支付（微信、支付宝、苹果）
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| way | String | 支付方式（ wecha/alipay/ios ） |
+##### 触发的回调
+`window.host_sdk.errorCallback(msg)`、
+`window.host_sdk.successCallback(msg)`、
+`window.host_sdk.cancelCallback(msg)`
+
 
 ## JavaScript SDK
 >#### 由于Android和ios平台的差异，需要根据不同平台使用不同的调用方式。过程过于繁琐，影响前端开发效率。因此对本文档实现的交互功能做了更加易于使用的封装。
