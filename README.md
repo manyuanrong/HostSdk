@@ -286,6 +286,7 @@ ios_hostsdk.callHandler(
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
+| money | String | 钱 |
 | way | String | 支付方式（ wecha/alipay/ios ） |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`、
