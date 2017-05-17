@@ -259,10 +259,12 @@ ios_hostsdk.callHandler(
 `window.host_sdk.errorCallback(msg)`
 
 ### share 分享
-> 分享形式根据参数判断。
-1、icon为空的情况下，分享文字内容。
-2、有description和icon的情况下，就是图文内容。
-3、只有图片的情况下，就是纯图片分享
+> 分享形式根据参数判断：
+
+> 1、icon为空的情况下，分享文字内容。
+> 2、有description和icon的情况下，就是图文内容。
+> 3、只有图片的情况下，就是纯图片分享
+
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
