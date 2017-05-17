@@ -1,4 +1,4 @@
-# ![logo](http://m.ireadercity.com/webapp/img/logo.png) 书香云集js与客户端交互文档
+# ![logo](http://m.ireadercity.com/webapp/img/logo.png) 书香云集js与客户端交互文档0.1
 
 ## 设计概要
 #### 设计目的
