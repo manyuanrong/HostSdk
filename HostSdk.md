@@ -627,7 +627,7 @@ window.hostsdk.pay (options);
 ```javascript
 window.hostsdk.openShelfFolder(
     {
-        money: "10",
+        money: 10,
         way: "wechat",
         errorCallback: function(msg) {
             alert("支付失败" + msg);
