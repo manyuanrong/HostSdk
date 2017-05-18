@@ -290,8 +290,14 @@ ios_hostsdk.callHandler(
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
 |---	|---|---|
-| money | String | 钱 |
-| way | String | 支付方式（ wecha/alipay/ios ） |
+| mode | int | 支付方式（1：支付宝，2：微信，4：paypal, 8：QQ支付，16：银行卡，32：信用卡，64：苹果支付 ） |
+| id | String | 档位id |
+| money | float | 价格 |
+| unit | int | 0：人民币，1：美元 
+| coin | int | 金币数量 |
+| coupon | int | 赠送的代金券 |
+| imgUrl | String | 角标url |
+| vipCount | int | 赠送的VIP天数 |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`、
 `window.host_sdk.successCallback(msg)`、
