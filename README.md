@@ -262,7 +262,6 @@ ios_hostsdk.callHandler(
 > 分享形式根据参数判断：
 > * 1、icon为空的情况下，分享文字内容。
 > * 2、有description和icon的情况下，就是图文内容。
-> * 3、只有图片的情况下，就是纯图片分享
 
 >##### 参数选项
 | 参数名 | 类型 | 备注 |
@@ -271,6 +270,19 @@ ios_hostsdk.callHandler(
 | url | String |分享的链接 |
 | description | String | 分享描述 |
 | icon | String | 分享的图片 |
+| platforms | String | 要分享的平台，多个用逗号分割:qzone,qq,wechat,wechatcircle,weibo |
+##### 触发的回调
+`window.host_sdk.errorCallback(msg)`、
+`window.host_sdk.successCallback(platform)`、
+`window.host_sdk.cancelCallback()`
+> > 分享成功后回调，携带用户选择的平台名
+
+### shareImg 分享纯图片
+
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| iconUrl | String | 分享的图片 |
 | platforms | String | 要分享的平台，多个用逗号分割:qzone,qq,wechat,wechatcircle,weibo |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`、
