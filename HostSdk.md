@@ -30,6 +30,7 @@ HostSdk.js支持多种引用方式.
 |openWeixin|打开微信客户端|
 |setViewTitle|设置app内显示的标题|
 |share|分享|
+|shareImg|分享纯图片|
 |openBookListDetail|打开书单详情|
 |pay|支付|
 
@@ -580,6 +581,46 @@ window.hostsdk.setViewTitle (
 ```
 
 
+### shareImg 分享纯图片
+```javascript
+window.hostsdk.shareImg ( options );
+```
+
+>##### 参数
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| options | Object | 选项 |
+
+>##### options 参数选项
+|参数名|类型|备注|
+|---	|---|---|
+| iconUrl | String | 分享的图片地址 |
+| platforms | String | 要分享的平台，多个用逗号分割:qzone,qq,wechat,wechatcircle,weibo |
+| successCallback | Function | 分享成功的回调 (可选) |
+| errorCallback | Function | 分享错误后的回调 (可选) |
+| cancelCallback | Function | 分享取消后的回调 (可选) |
+
+>##### js调用
+```javascript
+window.hostsdk.shareImg (
+    {
+	iconUrl: "分享的图片地址",
+	platforms: "qzone, wechat",
+	successCallback : function () {
+	    alert( "分享成功" );
+	},
+	errorCallback: function(msg) {
+	    alert(msg);
+	},
+	cancelCallback: function() {
+	    alert(msg);
+	}
+    }
+);
+```
+
+
 ### openBookListDetail 打开书单详情
 ```javascript
 window.hostsdk.openBookListDetail (id, errorCallback);
@@ -618,7 +659,6 @@ window.hostsdk.pay (options);
 |参数名|类型|备注|
 |---	|---|---|
 | money | Number | 钱 |
-| way | String | 支付方式 [注：wechat/alipay/ios] |
 | errorCallback | Function | 发生错误后的回调 (可选) |
 | successCallback | Function | 成功支付后的回调 (可选) |
 | cancelCallback | Function | 取消支付后的回调 (可选) |
@@ -628,7 +668,6 @@ window.hostsdk.pay (options);
 window.hostsdk.openShelfFolder(
     {
         money: 10,
-        way: "wechat",
         errorCallback: function(msg) {
             alert("支付失败" + msg);
         }
