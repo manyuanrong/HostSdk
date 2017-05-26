@@ -111,6 +111,7 @@ ios_hostsdk.callHandler(
 |openWeixin| 打开微信客户端 |
 |setViewTitle| 设置 app 内显示的标题 |
 | share | 分享 |
+| shareImg | 分享纯图片 |
 |openBookListDetail| 打开书单详情 |
 |pay| 调用支付 |
 
