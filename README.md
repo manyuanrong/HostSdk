@@ -113,6 +113,8 @@ ios_hostsdk.callHandler(
 | share | 分享 |
 | shareImg | 分享纯图片 |
 |openBookListDetail| 打开书单详情 |
+|setStatusBarColor| 设置安卓顶部电池电路条颜色 |
+|openBookListByHotType | 打开书籍精选列表 |
 |pay| 调用支付 |
 
 ### getInfo 获取环境信息
@@ -298,6 +300,20 @@ ios_hostsdk.callHandler(
 | id | String | 书单Id |
 ##### 触发的回调
 `window.host_sdk.errorCallback(msg)`
+
+### setStatusBarColor 设置安卓顶部电池电路条颜色
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| colorString | String | 16进制颜色值 |
+
+### openBookListByHotType 打开书籍精选列表
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| id | String | 精选ID（必传） |
+| name | String | 精选标题（必传，可传空字符串） |
+
 
 ### pay 调用支付
 >##### 参数选项
