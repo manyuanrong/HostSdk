@@ -33,6 +33,7 @@ HostSdk.js支持多种引用方式.
 |shareImg|分享纯图片|
 |openBookListDetail|打开书单详情|
 |pay|支付|
+|setShareParam|给客户端传递参数（页面来源渠道：sourceType）|
 
 
 ### share 分享
@@ -670,12 +671,48 @@ window.hostsdk.openShelfFolder(
         money: 10,
         errorCallback: function(msg) {
             alert("支付失败" + msg);
-        }
+        },
 	successCallback: function(msg) {
             alert("成功支付" + msg);
-        }
+        },
 	cancelCallback: function(msg) {
             alert("取消支付" + msg);
+        }
+    }
+);
+```
+
+
+### setShareParam 给客户端传递参数（页面来源渠道：sourceType）
+```javascript
+window.hostsdk.setShareParam (options);
+```
+
+>##### 参数
+> 
+|参数名|类型|备注|
+|---	|---|---|
+| options | Object | 选项 |
+
+>##### options 参数选项
+|参数名|类型|备注|
+|---	|---|---|
+| data | Obj | 参数(eg：sourceType--客户端来源) |
+| errorCallback | Function | 发生错误后的回调 (可选) |
+| successCallback | Function | 成功后的回调 (可选) |
+
+>##### js调用
+```javascript
+window.hostsdk.setShareParam(
+    {
+        data: {
+	    sourceType: 55
+	},
+        errorCallback: function(msg) {
+            alert("传递失败" + msg);
+        },
+	successCallback: function(msg) {
+            alert("成功传递" + msg);
         }
     }
 );
