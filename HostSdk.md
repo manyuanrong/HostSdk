@@ -697,7 +697,7 @@ window.hostsdk.setShareParam (options);
 >##### options 参数选项
 |参数名|类型|备注|
 |---	|---|---|
-| data | Obj | 参数(eg：sourceType--客户端来源) |
+| data | Object | 参数(eg：sourceType--客户端来源) |
 | errorCallback | Function | 发生错误后的回调 (可选) |
 | successCallback | Function | 成功后的回调 (可选) |
 
