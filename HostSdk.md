@@ -704,18 +704,18 @@ window.hostsdk.setShareParam (options);
 >##### sourceType 参数选项
 |对应编号|类型|场景名|
 |---	|---|---|
-| 10 | String | 周末大抽奖运营卡片 |
-| 11 | String | 排行 |
-| 22 | String | TA的云书架 |
-| 53 | String | 精选女频二级频道 |
-| 54 | String | 精选男频二级频道 |
-| 55 | String | 精选出版二级频道 |
-| 56 | String | 精选免费女生二级频道 |
-| 57 | String | 精选免费男生二级频道 |
-| 58 | String | 精选免费出版二级频道 |
-| 62 | String | 漫画banner |
-| 63 | String | 漫画小喇叭 |
-| 64 | String | 漫画运营卡片 |
+| 10 | int | 周末大抽奖运营卡片 |
+| 11 | int | 排行 |
+| 22 | int | TA的云书架 |
+| 53 | int | 精选女频二级频道 |
+| 54 | int | 精选男频二级频道 |
+| 55 | int | 精选出版二级频道 |
+| 56 | int | 精选免费女生二级频道 |
+| 57 | int | 精选免费男生二级频道 |
+| 58 | int | 精选免费出版二级频道 |
+| 62 | int | 漫画banner |
+| 63 | int | 漫画小喇叭 |
+| 64 | int | 漫画运营卡片 |
 
 >##### js调用
 ```javascript
