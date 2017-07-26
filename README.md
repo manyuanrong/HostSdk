@@ -66,11 +66,11 @@
 ###### 以分享为例
 ```javascript
 android_hostsdk.share(
-	'标题',
-	'http://www.baidu.com',
-	'描述',
-	'http://m.ireadercity.com/webapp/img/logo.png',
-	'qzone,wechat'
+    '标题',
+    'http://www.baidu.com',
+    '描述',
+    'http://m.ireadercity.com/webapp/img/logo.png',
+    'qzone,wechat'
 );
 ```
 
@@ -79,14 +79,14 @@ android_hostsdk.share(
 ###### 以分享为例
 ```javascript
 ios_hostsdk.callHandler(
-	"share",
-	{
-		title: "分享测试标题",
-		description: "书香云集，您的掌上图书馆",
-		url: "http://www.ireadercity.com",
-		icon: "http://m.ireadercity.com/webapp/img/logo.png",
-		platforms: "wechat,weibo,wechatcircle"
-	}
+    "share",
+    {
+        title: "分享测试标题",
+	description: "书香云集，您的掌上图书馆",
+	url: "http://www.ireadercity.com",
+	icon: "http://m.ireadercity.com/webapp/img/logo.png",
+	platforms: "wechat,weibo,wechatcircle"
+    }
 );
 ```
 
@@ -116,6 +116,7 @@ ios_hostsdk.callHandler(
 |setStatusBarColor| 设置安卓顶部电池电路条颜色 |
 |openBookListByHotType | 打开书籍精选列表 |
 |pay| 调用支付 |
+|setShareParam| 给客户端传递参数（页面来源渠道：sourceType） |
 
 ### getInfo 获取环境信息
 > 获取信息，包括userId，deviceId，idfa，version，channel等等
@@ -325,6 +326,16 @@ ios_hostsdk.callHandler(
 `window.host_sdk.errorCallback(msg)`、
 `window.host_sdk.successCallback(msg)`、
 `window.host_sdk.cancelCallback(msg)`
+
+### setShareParam 给客户端传递参数（页面来源渠道：sourceType）
+>##### 参数选项
+| 参数名 | 类型 | 备注 |
+|---	|---|---|
+| data | Object | 参数(eg：sourceType--客户端来源) |
+
+##### 触发的回调
+`window.host_sdk.errorCallback(msg)`、
+`window.host_sdk.successCallback(msg)`
 
 
 ## JavaScript SDK
